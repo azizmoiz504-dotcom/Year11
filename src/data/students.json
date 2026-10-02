@@ -1,0 +1,101 @@
+[
+  {
+    "id": "aisha-khan",
+    "name": "Aisha Khan",
+    "nickname": "Ash",
+    "quote": "We didn't realize we were making memories, we just knew we were having fun.",
+    "university": "University of Sharjah",
+    "major": "Mechanical Engineering",
+    "city": "Sharjah",
+    "currentPhoto": "/media/students/aisha-khan/current.jpg",
+    "babyPhoto": "/media/students/aisha-khan/baby.jpg",
+    "reel": "/media/students/aisha-khan/reel.mp4",
+    "tenYearsGoal": "Designing engines that make flying cleaner, and still calling everyone from this class.",
+    "funFacts": ["Most likely to fix the projector before IT arrives", "Always seen with a sketchbook", "Never once late to chemistry"]
+  },
+  {
+    "id": "omar-haddad",
+    "name": "Omar Haddad",
+    "quote": "Home is wherever the canteen fries are.",
+    "university": "American University of Sharjah",
+    "major": "Architecture",
+    "city": "Sharjah",
+    "currentPhoto": "/media/students/omar-haddad/current.jpg",
+    "babyPhoto": "/media/students/omar-haddad/baby.jpg",
+    "reel": "/media/students/omar-haddad/reel.mp4",
+    "tenYearsGoal": "Building homes that breathe, starting with one for my mum.",
+    "funFacts": ["Most likely to redesign the school building", "Always seen with headphones around his neck"]
+  },
+  {
+    "id": "layla-mansour",
+    "name": "Layla Mansour",
+    "nickname": "Lulu",
+    "quote": "Be the person your younger self needed.",
+    "university": "NYU Abu Dhabi",
+    "major": "Economics",
+    "city": "Abu Dhabi",
+    "currentPhoto": "/media/students/layla-mansour/current.jpg",
+    "babyPhoto": "/media/students/layla-mansour/baby.jpg",
+    "reel": "/media/students/layla-mansour/reel.mp4",
+    "tenYearsGoal": "Running my own investment fund that backs founders nobody else believes in.",
+    "funFacts": ["Most likely to become a CEO", "Always has snacks to share", "Debate team captain, three years running"]
+  },
+  {
+    "id": "yusuf-rahman",
+    "name": "Yusuf Rahman",
+    "quote": "Small steps, every single day.",
+    "university": "University of Sharjah",
+    "major": "Medicine",
+    "city": "Sharjah",
+    "currentPhoto": "/media/students/yusuf-rahman/current.jpg",
+    "babyPhoto": "/media/students/yusuf-rahman/baby.jpg",
+    "tenYearsGoal": "A paediatric surgeon who still makes time for Friday football.",
+    "funFacts": ["Most likely to save a life (and your grades)", "Always seen in the library at 7am"]
+  },
+  {
+    "id": "maya-fernandes",
+    "name": "Maya Fernandes",
+    "quote": "Kindness is free. Sprinkle that stuff everywhere.",
+    "university": "University of Toronto",
+    "major": "Psychology",
+    "city": "Toronto",
+    "currentPhoto": "/media/students/maya-fernandes/current.jpg",
+    "babyPhoto": "/media/students/maya-fernandes/baby.jpg",
+    "reel": "/media/students/maya-fernandes/reel.mp4",
+    "tenYearsGoal": "Running a practice that helps teenagers feel a little less alone.",
+    "funFacts": ["Most likely to remember your birthday", "Always seen with an iced coffee"]
+  },
+  {
+    "id": "zayd-ali",
+    "name": "Zayd Ali",
+    "nickname": "Z",
+    "quote": "It works on my machine.",
+    "university": "Khalifa University",
+    "major": "Computer Science",
+    "city": "Abu Dhabi",
+    "currentPhoto": "/media/students/zayd-ali/current.jpg",
+    "babyPhoto": "/media/students/zayd-ali/baby.jpg",
+    "reel": "/media/students/zayd-ali/reel.mp4",
+    "tenYearsGoal": "Shipping something millions of people use without ever knowing my name.",
+    "funFacts": ["Most likely to build the next big app", "Always seen debugging someone else's laptop"]
+  },
+  {
+    "id": "sara-ibrahim",
+    "name": "Sara Ibrahim",
+    "quote": "Colour outside the lines. That's where the good stuff is.",
+    "university": "American University of Sharjah",
+    "major": "Visual Communication",
+    "city": "Sharjah",
+    "currentPhoto": "/media/students/sara-ibrahim/current.jpg",
+    "reel": "/media/students/sara-ibrahim/reel.mp4",
+    "tenYearsGoal": "My name on a gallery wall in a city I've never been to yet.",
+    "funFacts": ["Most likely to design the reunion invites", "Always has paint on her sleeve"]
+  },
+  {
+    "id": "adam-chen",
+    "name": "Adam Chen",
+    "quote": "Taking the scenic route.",
+    "currentPhoto": "/media/students/adam-chen/current.jpg",
+    "babyPhoto": "/media/students/adam-chen/baby.jpg"
+  }
+]
