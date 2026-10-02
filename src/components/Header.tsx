@@ -2,6 +2,7 @@ import { motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { config } from '../config'
+import { scrollToSection } from '../lib/asset'
 import { ThemeToggle } from './ThemeToggle'
 
 const links = [
@@ -26,7 +27,7 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
-        <a href="#top" className="font-serif text-lg italic">
+        <a href="#top" onClick={(e) => scrollToSection(e, 'top')} className="font-serif text-lg italic">
           ’{String(config.classYear).slice(-2)}
         </a>
         <nav aria-label="Sections" className="no-scrollbar -mx-1 flex flex-1 justify-start gap-1 overflow-x-auto sm:justify-center">
@@ -34,6 +35,7 @@ export function Header() {
             <a
               key={l.href}
               href={l.href}
+              onClick={(e) => scrollToSection(e, l.href.slice(1))}
               className="shrink-0 rounded-full px-3 py-1.5 text-[13px] whitespace-nowrap text-ink-soft transition hover:bg-line hover:text-ink"
             >
               {l.label}

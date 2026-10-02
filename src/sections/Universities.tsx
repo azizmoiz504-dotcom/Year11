@@ -4,6 +4,7 @@ import { PinIcon } from '../components/Icons'
 import { Reveal, SectionHeading } from '../components/Reveal'
 import { SmartImage } from '../components/SmartImage'
 import { universityLogos } from '../config'
+import { asset } from '../lib/asset'
 import { groupByUniversity, students, UNDECIDED } from '../lib/students'
 import type { Student } from '../types'
 
@@ -59,7 +60,7 @@ export function Universities() {
 
       <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {groups.map((g, i) => {
-          const logo = universityLogos[g.university]
+          const logo = asset(universityLogos[g.university])
           const big = i === 0 && g.people.length > 1
           const share = Math.round((g.people.length / total) * 100)
           return (

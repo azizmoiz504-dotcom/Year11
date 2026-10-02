@@ -4,6 +4,7 @@ import { Polaroid } from '../components/Polaroid'
 import { SmartImage } from '../components/SmartImage'
 import { config } from '../config'
 import { useNow } from '../hooks/useNow'
+import { scrollToSection } from '../lib/asset'
 import { diffParts, fmt, localDate, pad } from '../lib/dates'
 import { students } from '../lib/students'
 
@@ -116,6 +117,7 @@ export function Hero() {
 
       <motion.a
         href="#class"
+        onClick={(e) => scrollToSection(e, 'class')}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 1 }}

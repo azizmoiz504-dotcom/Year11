@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { config } from '../config'
+import { asset } from '../lib/asset'
 
 /**
  * One <audio> element for the whole app, owned by this provider. It lives above
@@ -69,7 +70,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const getAudio = useCallback(() => {
     if (!audioRef.current) {
       const a = new Audio()
-      a.src = config.song.src
+      a.src = asset(config.song.src)
       a.loop = true
       a.preload = 'auto'
       a.volume = volume

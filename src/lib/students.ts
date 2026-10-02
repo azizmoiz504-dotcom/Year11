@@ -1,5 +1,6 @@
 import raw from '../data/students.json'
 import type { Student } from '../types'
+import { asset } from './asset'
 
 const clean = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : undefined)
 
@@ -9,14 +10,14 @@ export const students: Student[] = (raw as Partial<Student>[])
   .map((s) => ({
     id: s.id.trim(),
     name: s.name.trim(),
-    currentPhoto: s.currentPhoto.trim(),
+    currentPhoto: asset(s.currentPhoto.trim()),
     nickname: clean(s.nickname),
     quote: clean(s.quote),
     university: clean(s.university),
     major: clean(s.major),
     city: clean(s.city),
-    babyPhoto: clean(s.babyPhoto),
-    reel: clean(s.reel),
+    babyPhoto: asset(clean(s.babyPhoto)),
+    reel: asset(clean(s.reel)),
     tenYearsGoal: clean(s.tenYearsGoal),
     funFacts: Array.isArray(s.funFacts) ? s.funFacts.map(clean).filter((f): f is string => !!f) : undefined,
   }))
