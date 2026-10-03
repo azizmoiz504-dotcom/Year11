@@ -14,8 +14,10 @@ export const config = {
    * Paste your Supabase project URL and anon public key here. Leave empty to use src/data/*.json only.
    */
   backend: {
-    supabaseUrl: '',
-    supabaseAnonKey: '',
+    supabaseUrl: 'https://fadtqxuiclmfvrhvlxag.supabase.co',
+    // The public "anon" key: safe to publish; the database rules decide what it can do.
+    supabaseAnonKey:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhZHRxeHVpY2xtZnZyaHZseGFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMDg2ODksImV4cCI6MjEwNjU4NDY4OX0.ehaD6uybyyhx1WrSH_Aw27onh0SNWeuY5-M7tbQrONk',
   },
 
   /** Countdown on the cover. YYYY-MM-DD in the visitor's local time. */
