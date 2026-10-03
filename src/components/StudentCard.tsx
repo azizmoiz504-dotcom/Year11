@@ -7,7 +7,7 @@ export function StudentCard({ student: s }: { student: Student }) {
   return (
     <li className="list-none">
       <Link to={`/student/${s.id}`} state={{ modal: true }} className="group block text-center">
-        <div className="overflow-hidden bg-line">
+        <div className="overflow-hidden bg-line shadow-[0_12px_30px_-18px_rgb(29_42_68/0.6)]">
           <SmartImage
             src={s.photo}
             alt={s.name}
@@ -18,7 +18,7 @@ export function StudentCard({ student: s }: { student: Student }) {
           />
         </div>
         <h3 className="mt-3 text-[13px] leading-tight font-semibold tracking-[0.06em] uppercase sm:text-sm">{s.name}</h3>
-        {s.university && <p className="mt-1 text-[12px] leading-snug text-muted">{s.university}</p>}
+        {s.university && <p className="mt-1 text-[12px] leading-snug text-coral">{s.university}</p>}
         {s.quote && <p className="mx-auto mt-2 max-w-[18rem] font-serif text-[16px] leading-snug italic">“{s.quote}”</p>}
       </Link>
     </li>

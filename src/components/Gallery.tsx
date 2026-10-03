@@ -10,10 +10,11 @@ export function Gallery() {
   if (gallery.length === 0) return null
 
   return (
-    <section id="gallery" className="scroll-mt-14 border-t border-line py-16 sm:py-24">
+    <section id="gallery" className="mx-auto max-w-7xl scroll-mt-14 px-4 py-20 sm:px-6 sm:py-28">
       <div className="mb-10 flex items-end justify-between gap-4">
         <div>
-          <h2 className="font-serif text-5xl leading-none sm:text-6xl">Gallery</h2>
+          <p className="mb-3 text-[11px] font-medium tracking-[0.35em] text-coral uppercase">Camera roll</p>
+          <h2 className="font-serif text-5xl leading-none font-light sm:text-6xl">Gallery</h2>
           <p className="mt-3 text-[15px] text-muted">The year, in photos.</p>
         </div>
         <p className="text-sm text-muted tabular-nums">{gallery.length} photos</p>

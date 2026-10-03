@@ -1,11 +1,22 @@
 /**
- * Site settings. Student content lives in src/data/students.json.
+ * Site settings. Seniors live in src/data/students.json, gallery photos in src/data/gallery.json.
  */
 export const config = {
-  classYear: 2026,
+  classYear: 2027,
   schoolName: 'Our School',
+  tagline: 'the last chapter',
 
-  /** Background song: put the file at public/media/music/song.mp3. Set `enabled: false` to hide the player. */
+  /** Hero counters. Dates are YYYY-MM-DD in the visitor's local time. */
+  firstDay: '2015-09-01',
+  graduationDay: '2027-06-17',
+
+  /** The two class videos. Remove a line (or the file) to hide that section. */
+  videos: {
+    tenYears: { src: '/media/videos/ten-years.mp4', poster: '/media/videos/ten-years.jpg' },
+    signature: { src: '/media/videos/signature.mp4', poster: '/media/videos/signature.jpg' },
+  } as Record<'tenYears' | 'signature', { src: string; poster?: string } | undefined>,
+
+  /** Background song at public/media/music/song.mp3. It starts when someone presses Enter. */
   song: {
     enabled: true,
     src: '/media/music/song.mp3',
@@ -20,7 +31,7 @@ export const config = {
    */
   password: {
     enabled: false,
-    value: 'classof2026',
+    value: 'classof2027',
     hint: 'Ask the group chat',
   },
-} as const
+}

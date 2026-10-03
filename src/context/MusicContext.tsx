@@ -3,23 +3,37 @@ import { config } from '../config'
 import { asset } from '../lib/asset'
 
 /**
- * One <audio> element for the whole app. It lives above the router, so opening a
- * profile never restarts the song. Volume and mute are remembered for the session.
+ * One <audio> element for the whole app, above the router, so the song never restarts.
+ *  - `wantsPlay` is the visitor's choice (play/pause), remembered for the session.
+ *  - holds are temporary pauses requested by the videos; the song resumes when the
+ *    last hold is released, if the visitor still wants it.
  */
 interface MusicState {
   playing: boolean
+  wantsPlay: boolean
+  held: boolean
   volume: number
   muted: boolean
   unavailable: boolean
+  /** Call from the Enter click so the browser allows sound. */
+  start: () => void
   toggle: () => void
   setVolume: (v: number) => void
   toggleMute: () => void
+  hold: (key: string) => void
+  release: (key: string) => void
 }
 
 const MusicContext = createContext<MusicState | null>(null)
 const STORAGE_KEY = 'yb-music'
 
-function readSaved(): { volume?: number; muted?: boolean } {
+interface Saved {
+  paused?: boolean
+  volume?: number
+  muted?: boolean
+}
+
+function readSaved(): Saved {
   try {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? '{}')
   } catch {
@@ -27,7 +41,7 @@ function readSaved(): { volume?: number; muted?: boolean } {
   }
 }
 
-function save(patch: { volume?: number; muted?: boolean }) {
+function save(patch: Saved) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ ...readSaved(), ...patch }))
   } catch {
@@ -38,17 +52,22 @@ function save(patch: { volume?: number; muted?: boolean }) {
 export function MusicProvider({ children }: { children: ReactNode }) {
   const saved = useRef(readSaved()).current
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const holds = useRef(new Set<string>())
   const [playing, setPlaying] = useState(false)
+  const [wantsPlay, setWantsPlay] = useState(!saved.paused)
+  const [held, setHeld] = useState(false)
   const [volume, setVolumeState] = useState(saved.volume ?? config.song.volume)
   const [muted, setMuted] = useState(saved.muted ?? false)
-  const [unavailable, setUnavailable] = useState(false)
+  const [unavailable, setUnavailable] = useState(!config.song.enabled)
+  const wantsRef = useRef(wantsPlay)
+  wantsRef.current = wantsPlay
 
   const getAudio = useCallback(() => {
     if (!audioRef.current) {
       const a = new Audio(asset(config.song.src))
       a.loop = true
-      a.volume = volume
-      a.muted = muted
+      a.volume = saved.volume ?? config.song.volume
+      a.muted = saved.muted ?? false
       a.addEventListener('play', () => setPlaying(true))
       a.addEventListener('pause', () => setPlaying(false))
       a.addEventListener('error', () => {
@@ -58,13 +77,29 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       audioRef.current = a
     }
     return audioRef.current
-  }, [volume, muted])
+  }, [saved])
+
+  const tryPlay = useCallback(() => {
+    if (!config.song.enabled || holds.current.size > 0) return
+    getAudio()
+      .play()
+      .catch(() => setPlaying(false))
+  }, [getAudio])
+
+  const start = useCallback(() => {
+    if (config.song.enabled && wantsRef.current) tryPlay()
+  }, [tryPlay])
 
   const toggle = useCallback(() => {
-    const a = getAudio()
-    if (a.paused) a.play().catch(() => setPlaying(false))
-    else a.pause()
-  }, [getAudio])
+    const next = !wantsRef.current
+    setWantsPlay(next)
+    save({ paused: !next })
+    if (next) {
+      holds.current.clear()
+      setHeld(false)
+      tryPlay()
+    } else getAudio().pause()
+  }, [getAudio, tryPlay])
 
   const setVolume = useCallback(
     (v: number) => {
@@ -85,6 +120,21 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     save({ muted: a.muted })
   }, [getAudio])
 
+  const hold = useCallback((key: string) => {
+    holds.current.add(key)
+    setHeld(true)
+    audioRef.current?.pause()
+  }, [])
+
+  const release = useCallback(
+    (key: string) => {
+      if (!holds.current.delete(key) || holds.current.size > 0) return
+      setHeld(false)
+      if (wantsRef.current && audioRef.current) tryPlay()
+    },
+    [tryPlay],
+  )
+
   useEffect(() => {
     if (!('mediaSession' in navigator) || !playing) return
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -97,8 +147,8 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   useEffect(() => () => audioRef.current?.pause(), [])
 
   const value = useMemo(
-    () => ({ playing, volume, muted, unavailable, toggle, setVolume, toggleMute }),
-    [playing, volume, muted, unavailable, toggle, setVolume, toggleMute],
+    () => ({ playing, wantsPlay, held, volume, muted, unavailable, start, toggle, setVolume, toggleMute, hold, release }),
+    [playing, wantsPlay, held, volume, muted, unavailable, start, toggle, setVolume, toggleMute, hold, release],
   )
   return <MusicContext.Provider value={value}>{children}</MusicContext.Provider>
 }

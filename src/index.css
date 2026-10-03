@@ -4,31 +4,43 @@
 
 @theme {
   --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
 
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-coral: var(--coral);
+  --color-gold: var(--gold);
+  --color-sky: var(--sky);
+  --color-navy: #1d2a44;
+  --color-cream: #f4ead7;
 }
 
-/* Layout: one centred column, photo grid, nothing else competing with the faces. */
+/* Warm paper pages, navy ink, coral + gold + sky as the class colours.
+   Coloured bands (navy, coral) break up the scroll between sections. */
 :root {
-  --bg: #f6f6f4;
-  --surface: #ffffff;
-  --ink: #141414;
-  --muted: #74726e;
-  --line: rgb(20 20 20 / 0.09);
+  --bg: #f4ead7;
+  --surface: #fbf6ec;
+  --ink: #1d2a44;
+  --muted: #6f6a7a;
+  --line: rgb(29 42 68 / 0.12);
+  --coral: #e0663f;
+  --gold: #e3a83b;
+  --sky: #6f9fcf;
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0e0e0e;
-  --surface: #181818;
-  --ink: #f1f0ee;
-  --muted: #9b9994;
-  --line: rgb(241 240 238 / 0.1);
+  --bg: #131b2e;
+  --surface: #1b2540;
+  --ink: #f4ead7;
+  --muted: #a3a6b8;
+  --line: rgb(244 234 215 / 0.12);
+  --coral: #f07a52;
+  --gold: #f0bb55;
+  --sky: #8fb6de;
   color-scheme: dark;
 }
 
@@ -42,14 +54,20 @@ body {
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--coral);
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--coral);
   outline-offset: 3px;
   border-radius: 8px;
+}
+
+.polaroid {
+  background: #fdfaf3;
+  padding: 7px 7px 26px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 14px 30px -12px rgb(29 42 68 / 0.45);
 }
 
 .eq-bar {
@@ -70,7 +88,7 @@ input[type='range'].volume {
   appearance: none;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(to right, var(--ink) var(--val, 60%), var(--line) var(--val, 60%));
+  background: linear-gradient(to right, var(--coral) var(--val, 60%), var(--line) var(--val, 60%));
 }
 input[type='range'].volume::-webkit-slider-thumb {
   -webkit-appearance: none;

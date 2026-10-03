@@ -1,6 +1,6 @@
-# Class of 2026
+# Class of 2027
 
-A simple static yearbook site: every senior's portrait, name, university and quote, plus a gallery of the year.
+A static yearbook site: an intro screen with music, a polaroid cover, every senior's portrait, name, university and quote, the class "In 10 years" reel, a photo gallery and the signature video.
 Built with Vite + React + TypeScript + Tailwind. No backend.
 
 **Live site:** https://azizmoiz504-dotcom.github.io/Year11/
@@ -33,12 +33,23 @@ Put photos in `public/media/gallery/` and list them in `src/data/gallery.json`:
 ```
 Captions are optional. Resize photos to about 1600px on the long side so the page stays fast.
 
+## Videos
+There are two videos, set in `src/config.ts` under `videos`:
+- **In 10 years** (vertical, 9:16): `public/media/videos/ten-years.mp4`
+- **Signatures** (landscape, 16:9): `public/media/videos/signature.mp4`
+
+Replace the files and keep the same names. The `.jpg` next to each video is the still image shown before it plays.
+Keep each video under about 50 MB. To shrink one:
+`ffmpeg -i in.mov -vf scale=1280:-2 -c:v libx264 -crf 26 -movflags +faststart -c:a aac -b:a 128k out.mp4`
+The music pauses while a video plays and comes back when it stops.
+
 ## Music
 Replace `public/media/music/song.mp3` with your song, then set the title and artist in `src/config.ts`.
-The player starts paused, and visitors tap play. To remove the player, set `song.enabled: false`.
+It starts when someone presses Enter on the intro screen. To remove the player, set `song.enabled: false`.
 
 ## Settings (`src/config.ts`)
-- `classYear`, `schoolName`
+- `classYear`, `schoolName`, `tagline`
+- `firstDay` and `graduationDay` for the counters on the cover
 - `password.enabled: true` adds a password screen. It's a light gate, not real security.
 
 ## Run locally

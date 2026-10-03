@@ -2,10 +2,10 @@ import { config } from '../config'
 import { useMusic } from '../context/MusicContext'
 import { MuteIcon, PauseIcon, PlayIcon, VolumeIcon } from './Icons'
 
-/** Small player pinned bottom-right. Starts paused; one tap plays the class song. */
+/** Small player pinned bottom-right. The song starts on the intro's Enter click. */
 export function MusicPlayer() {
-  const { playing, volume, muted, unavailable, toggle, setVolume, toggleMute } = useMusic()
-  if (!config.song.enabled || unavailable) return null
+  const { playing, wantsPlay, held, volume, muted, unavailable, toggle, setVolume, toggleMute } = useMusic()
+  if (unavailable) return null
   const shown = muted ? 0 : volume
 
   return (
@@ -17,21 +17,21 @@ export function MusicPlayer() {
       <button
         type="button"
         onClick={toggle}
-        aria-label={playing ? 'Pause music' : 'Play music'}
-        className="grid size-9 shrink-0 place-items-center rounded-full bg-ink text-bg transition active:scale-95"
+        aria-label={wantsPlay ? 'Pause music' : 'Play music'}
+        className="grid size-9 shrink-0 place-items-center rounded-full bg-coral text-white transition active:scale-95"
       >
-        {playing ? <PauseIcon width={15} height={15} /> : <PlayIcon width={15} height={15} />}
+        {wantsPlay ? <PauseIcon width={15} height={15} /> : <PlayIcon width={15} height={15} />}
       </button>
 
       <span aria-hidden="true" className={`flex h-3.5 items-end gap-[2px] ${playing && !muted ? '' : 'eq-paused'}`}>
         {[0.9, 0.6, 1.1].map((d, i) => (
-          <span key={i} className="eq-bar block h-full w-[2.5px] rounded-full bg-ink" style={{ animationDuration: `${d}s` }} />
+          <span key={i} className="eq-bar block h-full w-[2.5px] rounded-full bg-coral" style={{ animationDuration: `${d}s` }} />
         ))}
       </span>
 
       <span className="flex min-w-0 flex-col leading-tight">
         <span className="max-w-[8rem] truncate text-[13px] font-medium">{config.song.title}</span>
-        <span className="max-w-[8rem] truncate text-[11px] text-muted">{config.song.artist}</span>
+        <span className="max-w-[8rem] truncate text-[11px] text-muted">{held && wantsPlay ? 'Paused for the video' : config.song.artist}</span>
       </span>
 
       <span className="hidden items-center gap-1.5 pl-1 sm:flex">
