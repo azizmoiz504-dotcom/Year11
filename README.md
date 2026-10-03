@@ -3,15 +3,14 @@
 A static yearbook site: an intro screen with music, a polaroid cover, every senior's portrait, name, university and quote, the class "In 10 years" reel, a photo gallery and the signature video.
 Built with Vite + React + TypeScript + Tailwind. No backend.
 
-**Live site:** https://azizmoiz504-dotcom.github.io/Year11/
-It redeploys automatically (GitHub Actions → `gh-pages` branch) every time this branch is pushed.
+**Live sites (Vercel):** boys https://msb-2027.vercel.app · boys + girls https://msb-2027-all.vercel.app
+Both redeploy automatically every time this branch is pushed. The boys + girls project has the environment variable `VITE_SITE=all`.
 
 ## Two sites from one codebase
 - **Boys** (default): seniors from `src/data/students.json`, database tables `students` / `gallery`.
 - **Boys + girls**: build with `VITE_SITE=all` (`npm run build:all`). Seniors come from `src/data/students-all.json` and the tables are `all_students` / `all_gallery` (set up with [`supabase/setup-all.sql`](supabase/setup-all.sql)).
 
 Per-site settings live in `src/site.ts`. Everything else (design, music, videos) is shared.
-On GitHub Pages the boys' site is at the root and the boys + girls site is under `/all/`.
 On Vercel, make two projects from this repo and set the environment variable `VITE_SITE=all` on the second one.
 
 ## Let classmates fill in their own cards
