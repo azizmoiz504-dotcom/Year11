@@ -18,6 +18,6 @@ export const site = {
   },
   all: {
     tablePrefix: 'all_',
-    classSize: 14,
+    classSize: 21,
   },
 }[siteId]

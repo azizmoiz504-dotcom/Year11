@@ -47,7 +47,7 @@ interface StudentRow {
 }
 
 export async function fetchStudents(): Promise<Student[]> {
-  const rows = await request<StudentRow[]>(`/rest/v1/${t}students?select=id,name,university,quote,photo_url,baby_photo_url&order=created_at.asc`)
+  const rows = await request<StudentRow[]>(`/rest/v1/${t}students?select=id,name,university,quote,photo_url,baby_photo_url&order=name.asc`)
   return rows.map((r) => ({
     id: r.id,
     name: r.name,
