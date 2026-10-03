@@ -63,8 +63,9 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const [held, setHeld] = useState(false)
   const [index, setIndex] = useState(0)
   const indexRef = useRef(0)
-  const [volume, setVolumeState] = useState(saved.volume ?? config.music.volume)
-  const [muted, setMuted] = useState(saved.muted ?? false)
+  // Always start at the configured volume (full); changes only last until the page is closed.
+  const [volume, setVolumeState] = useState(config.music.volume)
+  const [muted, setMuted] = useState(false)
   const [unavailable, setUnavailable] = useState(songs.length === 0)
   const wantsRef = useRef(wantsPlay)
   wantsRef.current = wantsPlay
@@ -85,8 +86,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     if (!audioRef.current) {
       const a = new Audio(asset(songs[0]!.src))
       a.loop = songs.length === 1
-      a.volume = saved.volume ?? config.music.volume
-      a.muted = saved.muted ?? false
+      a.volume = config.music.volume
       a.addEventListener('play', () => setPlaying(true))
       a.addEventListener('pause', () => setPlaying(false))
       a.addEventListener('ended', () => goTo(indexRef.current + 1))

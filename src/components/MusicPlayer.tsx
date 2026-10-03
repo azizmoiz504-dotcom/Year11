@@ -11,7 +11,7 @@ export function MusicPlayer() {
     <div
       role="region"
       aria-label="Music player"
-      className="fixed right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2.5 rounded-full border border-line bg-surface/90 p-1.5 pr-4 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.3)] backdrop-blur-xl sm:right-5 sm:bottom-5"
+      className="fixed right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2 rounded-full border border-line bg-surface/90 p-1.5 pr-3 sm:gap-2.5 sm:pr-4 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.3)] backdrop-blur-xl sm:right-5 sm:bottom-5"
     >
       <button
         type="button"
@@ -28,7 +28,7 @@ export function MusicPlayer() {
         ))}
       </span>
 
-      <span className="flex min-w-0 flex-col leading-tight">
+      <span className="hidden min-w-0 flex-col leading-tight sm:flex">
         <span className="max-w-[8rem] truncate text-[13px] font-medium">{track.title}</span>
         <span className="max-w-[8rem] truncate text-[11px] text-muted">{held && wantsPlay ? 'Paused for the video' : track.artist}</span>
       </span>

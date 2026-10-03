@@ -20,12 +20,13 @@ create table if not exists public.all_students (
   updated_at timestamptz not null default now()
 );
 alter table public.all_students alter column photo_url drop not null;
+alter table public.all_students add column if not exists position int;  -- card order
 alter table public.all_students enable row level security;
 drop policy if exists "anyone can read all seniors" on public.all_students;
 create policy "anyone can read all seniors" on public.all_students for select using (true);
 -- Everyone may read every column except the password hash. Edits go through all_update_student().
 revoke all on public.all_students from anon, authenticated;
-grant select (id, name, university, quote, photo_url, baby_photo_url, created_at, updated_at) on public.all_students to anon, authenticated;
+grant select (id, name, university, quote, photo_url, baby_photo_url, position, created_at, updated_at) on public.all_students to anon, authenticated;
 
 -- ── Gallery ────────────────────────────────────────────────────────────────
 create table if not exists public.all_gallery (

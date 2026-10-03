@@ -8,84 +8,12 @@
     "babyPhoto": "/media/students/abbas-bhikhapurwala/baby.jpg"
   },
   {
-    "id": "abdullah-jawad",
-    "name": "Abdullah Jawad",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/abdullah-jawad/photo.jpg",
-    "babyPhoto": "/media/students/abdullah-jawad/baby.jpg"
-  },
-  {
-    "id": "adnan-nagdawala",
-    "name": "Adnan Nagdawala",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/adnan-nagdawala/photo.jpg",
-    "babyPhoto": "/media/students/adnan-nagdawala/baby.jpg"
-  },
-  {
-    "id": "ali-asgar-patanwala",
-    "name": "Ali Asgar Patanwala",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/ali-asgar-patanwala/photo.jpg",
-    "babyPhoto": "/media/students/ali-asgar-patanwala/baby.jpg"
-  },
-  {
-    "id": "ali-asgar-tinwala",
-    "name": "Ali Asgar Tinwala",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/ali-asgar-tinwala/photo.jpg",
-    "babyPhoto": "/media/students/ali-asgar-tinwala/baby.jpg"
-  },
-  {
-    "id": "aliasger-chalawala",
-    "name": "Aliasger Chalawala",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/aliasger-chalawala/photo.jpg",
-    "babyPhoto": "/media/students/aliasger-chalawala/baby.jpg"
-  },
-  {
-    "id": "aziz-hamid",
-    "name": "Aziz Hamid",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/aziz-hamid/photo.jpg",
-    "babyPhoto": "/media/students/aziz-hamid/baby.jpg"
-  },
-  {
-    "id": "husaina-taheri",
-    "name": "Husaina Taheri",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/husaina-taheri/photo.jpg",
-    "babyPhoto": "/media/students/husaina-taheri/baby.jpg"
-  },
-  {
-    "id": "huzaifa-rampur",
-    "name": "Huzaifa Rampur",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/huzaifa-rampur/photo.jpg",
-    "babyPhoto": "/media/students/huzaifa-rampur/baby.jpg"
-  },
-  {
     "id": "ibrahim-dalal",
     "name": "Ibrahim Dalal",
     "university": "",
     "quote": "",
     "photo": "/media/students/ibrahim-dalal/photo.jpg",
     "babyPhoto": "/media/students/ibrahim-dalal/baby.jpg"
-  },
-  {
-    "id": "insiya-dholfar",
-    "name": "Insiya Dholfar",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/insiya-dholfar/photo.jpg",
-    "babyPhoto": "/media/students/insiya-dholfar/baby.jpg"
   },
   {
     "id": "mohammed-bahrainwala",
@@ -96,6 +24,38 @@
     "babyPhoto": "/media/students/mohammed-bahrainwala/baby.jpg"
   },
   {
+    "id": "taha-bombaywala",
+    "name": "Taha Bombaywala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/taha-bombaywala/photo.jpg",
+    "babyPhoto": "/media/students/taha-bombaywala/baby.jpg"
+  },
+  {
+    "id": "ali-asgar-patanwala",
+    "name": "Ali Asgar Patanwala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/ali-asgar-patanwala/photo.jpg",
+    "babyPhoto": "/media/students/ali-asgar-patanwala/baby.jpg"
+  },
+  {
+    "id": "abdullah-jawad",
+    "name": "Abdullah Jawad",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/abdullah-jawad/photo.jpg",
+    "babyPhoto": "/media/students/abdullah-jawad/baby.jpg"
+  },
+  {
+    "id": "aliasger-chalawala",
+    "name": "Aliasger Chalawala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/aliasger-chalawala/photo.jpg",
+    "babyPhoto": "/media/students/aliasger-chalawala/baby.jpg"
+  },
+  {
     "id": "mohammed-fefco",
     "name": "Mohammed Fefco",
     "university": "",
@@ -104,12 +64,84 @@
     "babyPhoto": "/media/students/mohammed-fefco/baby.jpg"
   },
   {
+    "id": "taha-shamim",
+    "name": "Taha Shamim",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/taha-shamim/photo.jpg",
+    "babyPhoto": "/media/students/taha-shamim/baby.jpg"
+  },
+  {
+    "id": "huzaifa-rampur",
+    "name": "Huzaifa Rampur",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/huzaifa-rampur/photo.jpg",
+    "babyPhoto": "/media/students/huzaifa-rampur/baby.jpg"
+  },
+  {
+    "id": "aziz-hamid",
+    "name": "Aziz Hamid",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/aziz-hamid/photo.jpg",
+    "babyPhoto": "/media/students/aziz-hamid/baby.jpg"
+  },
+  {
+    "id": "ali-asghar-tinwala",
+    "name": "Ali Asghar Tinwala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/ali-asghar-tinwala/photo.jpg",
+    "babyPhoto": "/media/students/ali-asghar-tinwala/baby.jpg"
+  },
+  {
     "id": "mohammed-ratlami",
     "name": "Mohammed Ratlami",
     "university": "",
     "quote": "",
     "photo": "/media/students/mohammed-ratlami/photo.jpg",
     "babyPhoto": "/media/students/mohammed-ratlami/baby.jpg"
+  },
+  {
+    "id": "adnan-nagdawala",
+    "name": "Adnan Nagdawala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/adnan-nagdawala/photo.jpg",
+    "babyPhoto": "/media/students/adnan-nagdawala/baby.jpg"
+  },
+  {
+    "id": "insiya-dholfar",
+    "name": "Insiya Dholfar",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/insiya-dholfar/photo.jpg",
+    "babyPhoto": "/media/students/insiya-dholfar/baby.jpg"
+  },
+  {
+    "id": "sherebanu-aliasgar",
+    "name": "Sherebanu Aliasgar",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/sherebanu-aliasgar/photo.jpg",
+    "babyPhoto": "/media/students/sherebanu-aliasgar/baby.jpg"
+  },
+  {
+    "id": "umme-haani-bombaywala",
+    "name": "Umme Haani Bombaywala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/umme-haani-bombaywala/photo.jpg",
+    "babyPhoto": "/media/students/umme-haani-bombaywala/baby.jpg"
+  },
+  {
+    "id": "umaima-husnain",
+    "name": "Umaima Husnain",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/umaima-husnain/photo.jpg",
+    "babyPhoto": "/media/students/umaima-husnain/baby.jpg"
   },
   {
     "id": "rashida-tinwala",
@@ -128,43 +160,11 @@
     "babyPhoto": "/media/students/ruqayyah-petlawadwala/baby.jpg"
   },
   {
-    "id": "sherebanu-aliasgar",
-    "name": "Sherebanu Aliasgar",
+    "id": "husaina-taheri",
+    "name": "Husaina Taheri",
     "university": "",
     "quote": "",
-    "photo": "/media/students/sherebanu-aliasgar/photo.jpg",
-    "babyPhoto": "/media/students/sherebanu-aliasgar/baby.jpg"
-  },
-  {
-    "id": "taha-bombaywala",
-    "name": "Taha Bombaywala",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/taha-bombaywala/photo.jpg",
-    "babyPhoto": "/media/students/taha-bombaywala/baby.jpg"
-  },
-  {
-    "id": "taha-shamim",
-    "name": "Taha Shamim",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/taha-shamim/photo.jpg",
-    "babyPhoto": "/media/students/taha-shamim/baby.jpg"
-  },
-  {
-    "id": "umaima-husnain",
-    "name": "Umaima Husnain",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/umaima-husnain/photo.jpg",
-    "babyPhoto": "/media/students/umaima-husnain/baby.jpg"
-  },
-  {
-    "id": "umme-haani-bombaywala",
-    "name": "Umme Haani Bombaywala",
-    "university": "",
-    "quote": "",
-    "photo": "/media/students/umme-haani-bombaywala/photo.jpg",
-    "babyPhoto": "/media/students/umme-haani-bombaywala/baby.jpg"
+    "photo": "/media/students/husaina-taheri/photo.jpg",
+    "babyPhoto": "/media/students/husaina-taheri/baby.jpg"
   }
 ]

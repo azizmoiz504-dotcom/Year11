@@ -47,7 +47,13 @@ interface StudentRow {
 }
 
 export async function fetchStudents(): Promise<Student[]> {
-  const rows = await request<StudentRow[]>(`/rest/v1/${t}students?select=id,name,university,quote,photo_url,baby_photo_url&order=name.asc`)
+  const cols = 'select=id,name,university,quote,photo_url,baby_photo_url'
+  // Cards follow the `position` column (boys first, then girls). Fall back to name order if the
+  // database hasn't been given that column yet.
+  const rows = await request<StudentRow[]>(`/rest/v1/${t}students?${cols}&order=position.asc.nullslast,name.asc`).catch((err) => {
+    if (err instanceof BackendError && err.code === 'network') throw err
+    return request<StudentRow[]>(`/rest/v1/${t}students?${cols}&order=name.asc`)
+  })
   return rows.map((r) => ({
     id: r.id,
     name: r.name,

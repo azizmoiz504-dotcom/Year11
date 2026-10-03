@@ -16,8 +16,8 @@ export function Header() {
   const links = allLinks(live ? Math.max(1, gallery.length) : gallery.length)
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/90 pt-[env(safe-area-inset-top)] backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6">
-        <a href="#top" onClick={(e) => scrollToSection(e, 'top')} className="shrink-0 font-serif text-lg italic">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-1 px-2 sm:gap-3 sm:px-6">
+        <a href="#top" onClick={(e) => scrollToSection(e, 'top')} className="hidden shrink-0 font-serif text-lg italic sm:block">
           ’{String(config.classYear).slice(-2)}
         </a>
         <nav aria-label="Sections" className="flex flex-1 justify-start gap-0.5 overflow-x-auto [scrollbar-width:none] sm:justify-center">
@@ -26,7 +26,7 @@ export function Header() {
               key={l.id}
               href={`#${l.id}`}
               onClick={(e) => scrollToSection(e, l.id)}
-              className="shrink-0 rounded-full px-2.5 py-1.5 text-[13px] sm:px-3 whitespace-nowrap text-muted transition-colors hover:bg-line hover:text-ink"
+              className="shrink-0 rounded-full px-2 py-1.5 text-[13px] whitespace-nowrap sm:px-3 text-muted transition-colors hover:bg-line hover:text-ink"
             >
               {l.label}
             </a>

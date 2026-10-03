@@ -46,7 +46,7 @@ export function StudentCard({ student: s }: { student: Student }) {
       <h3 className="mt-2.5 truncate text-[13px] leading-tight font-semibold whitespace-nowrap sm:text-sm xl:text-[12.5px]" title={s.name}>
         {s.name}
       </h3>
-      {s.quote && <p className="mx-auto mt-1.5 max-w-[18rem] font-serif text-[15px] leading-snug italic">“{s.quote}”</p>}
+      {s.quote && <p className="mx-auto mt-1.5 line-clamp-2 max-w-[18rem] font-serif text-[15px] leading-snug italic" title={s.quote}>“{s.quote}”</p>}
       {s.university && <p className="mt-1.5 text-[11px] leading-snug text-accent">{s.university}</p>}
     </>
   )

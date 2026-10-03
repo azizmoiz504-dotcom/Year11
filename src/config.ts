@@ -37,7 +37,8 @@ export const config = {
    */
   music: {
     enabled: true,
-    volume: 0.6,
+    /** Volume every time the site is opened (1 = full). */
+    volume: 1,
     songs: [{ src: '/media/music/whered-all-the-time-go.mp3', title: "Where'd All the Time Go?", artist: 'Dr. Dog' }],
   },
 

@@ -2,7 +2,7 @@
 """
 Makes the one-off seed block for Supabase: one card per name, each with its own password.
 Usage: python3 scripts/make-seed.py "Name One" "Name Two" ...
-Prints (1) SQL to paste into Supabase after setup.sql and (2) the name → password list to hand out.
+Cards appear in the order given. Prints (1) SQL to paste into Supabase after setup.sql and (2) the name → password list to hand out.
 Don't commit the output: it contains the passwords.
 """
 import secrets
@@ -19,11 +19,11 @@ rows, creds = [], []
 for name in names:
     pw = f"{secrets.choice(WORDS)}-{secrets.choice(WORDS)}-{secrets.randbelow(90) + 10}"
     safe = name.replace("'", "''")
-    rows.append(f"  ('{safe}', extensions.crypt('{pw}', extensions.gen_salt('bf')))")
+    rows.append(f"  ('{safe}', extensions.crypt('{pw}', extensions.gen_salt('bf')), {len(rows) + 1})")
     creds.append((name, pw))
 
 print("-- Seed: run once, after setup.sql. Re-running adds duplicates.")
-print("insert into public.students (name, pin_hash) values")
+print("insert into public.students (name, pin_hash, position) values")
 print(",\n".join(rows) + ";")
 print()
 for name, pw in creds:
