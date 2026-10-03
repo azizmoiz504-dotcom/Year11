@@ -3,76 +3,50 @@ import { config } from '../config'
 import { asset } from '../lib/asset'
 
 /**
- * One <audio> element for the whole app, owned by this provider. It lives above
- * the router, so navigating between pages never restarts the song.
- *
- * Two separate ideas of "playing":
- *  - `wantsPlay` is the visitor's choice (play/pause button). Remembered for the session.
- *  - holds are temporary pauses requested by reels. When the last hold is
- *    released, the song resumes only if the visitor still wants it.
+ * One <audio> element for the whole app. It lives above the router, so opening a
+ * profile never restarts the song. Volume and mute are remembered for the session.
  */
 interface MusicState {
   playing: boolean
-  wantsPlay: boolean
   volume: number
   muted: boolean
   unavailable: boolean
-  started: boolean
-  /** Call from a click handler (the Enter button) so the browser allows audio. */
-  start: () => void
   toggle: () => void
   setVolume: (v: number) => void
   toggleMute: () => void
-  hold: (key: string) => void
-  release: (key: string) => void
 }
 
 const MusicContext = createContext<MusicState | null>(null)
 const STORAGE_KEY = 'yb-music'
 
-interface Saved {
-  paused?: boolean
-  volume?: number
-  muted?: boolean
-}
-
-function readSaved(): Saved {
+function readSaved(): { volume?: number; muted?: boolean } {
   try {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? '{}') as Saved
+    return JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? '{}')
   } catch {
     return {}
   }
 }
 
-function writeSaved(patch: Saved) {
+function save(patch: { volume?: number; muted?: boolean }) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ ...readSaved(), ...patch }))
   } catch {
-    /* private mode: nothing to remember */
+    /* private mode */
   }
 }
 
 export function MusicProvider({ children }: { children: ReactNode }) {
   const saved = useRef(readSaved()).current
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const holds = useRef(new Set<string>())
-
   const [playing, setPlaying] = useState(false)
-  const [wantsPlay, setWantsPlay] = useState(!saved.paused)
   const [volume, setVolumeState] = useState(saved.volume ?? config.song.volume)
   const [muted, setMuted] = useState(saved.muted ?? false)
   const [unavailable, setUnavailable] = useState(false)
-  const [started, setStarted] = useState(false)
-
-  const wantsPlayRef = useRef(wantsPlay)
-  wantsPlayRef.current = wantsPlay
 
   const getAudio = useCallback(() => {
     if (!audioRef.current) {
-      const a = new Audio()
-      a.src = asset(config.song.src)
+      const a = new Audio(asset(config.song.src))
       a.loop = true
-      a.preload = 'auto'
       a.volume = volume
       a.muted = muted
       a.addEventListener('play', () => setPlaying(true))
@@ -84,43 +58,22 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       audioRef.current = a
     }
     return audioRef.current
-  }, [])
-
-  const tryPlay = useCallback(() => {
-    if (holds.current.size > 0) return
-    getAudio()
-      .play()
-      .catch(() => setPlaying(false))
-  }, [getAudio])
-
-  const start = useCallback(() => {
-    setStarted(true)
-    const a = getAudio()
-    if (wantsPlayRef.current) tryPlay()
-    else a.load()
-  }, [getAudio, tryPlay])
+  }, [volume, muted])
 
   const toggle = useCallback(() => {
-    const next = !wantsPlayRef.current
-    setWantsPlay(next)
-    writeSaved({ paused: !next })
-    if (next) {
-      // An explicit press wins over any reel that's holding the music.
-      holds.current.clear()
-      tryPlay()
-    } else getAudio().pause()
-  }, [getAudio, tryPlay])
+    const a = getAudio()
+    if (a.paused) a.play().catch(() => setPlaying(false))
+    else a.pause()
+  }, [getAudio])
 
   const setVolume = useCallback(
     (v: number) => {
       const a = getAudio()
       a.volume = v
+      a.muted = false
       setVolumeState(v)
-      if (v > 0 && a.muted) {
-        a.muted = false
-        setMuted(false)
-      }
-      writeSaved({ volume: v, muted: v > 0 ? false : undefined })
+      setMuted(false)
+      save({ volume: v, muted: false })
     },
     [getAudio],
   )
@@ -129,44 +82,24 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     const a = getAudio()
     a.muted = !a.muted
     setMuted(a.muted)
-    writeSaved({ muted: a.muted })
+    save({ muted: a.muted })
   }, [getAudio])
 
-  const hold = useCallback(
-    (key: string) => {
-      holds.current.add(key)
-      audioRef.current?.pause()
-    },
-    [],
-  )
-
-  const release = useCallback(
-    (key: string) => {
-      if (!holds.current.delete(key)) return
-      if (holds.current.size === 0 && wantsPlayRef.current && audioRef.current) tryPlay()
-    },
-    [tryPlay],
-  )
-
-  // Lock screen / notification controls on phones.
   useEffect(() => {
-    if (!('mediaSession' in navigator) || !started) return
+    if (!('mediaSession' in navigator) || !playing) return
     navigator.mediaSession.metadata = new MediaMetadata({
       title: config.song.title,
       artist: config.song.artist,
       album: `Class of ${config.classYear}`,
     })
-    navigator.mediaSession.setActionHandler('play', () => !wantsPlayRef.current && toggle())
-    navigator.mediaSession.setActionHandler('pause', () => wantsPlayRef.current && toggle())
-  }, [started, toggle])
+  }, [playing])
 
   useEffect(() => () => audioRef.current?.pause(), [])
 
   const value = useMemo(
-    () => ({ playing, wantsPlay, volume, muted, unavailable, started, start, toggle, setVolume, toggleMute, hold, release }),
-    [playing, wantsPlay, volume, muted, unavailable, started, start, toggle, setVolume, toggleMute, hold, release],
+    () => ({ playing, volume, muted, unavailable, toggle, setVolume, toggleMute }),
+    [playing, volume, muted, unavailable, toggle, setVolume, toggleMute],
   )
-
   return <MusicContext.Provider value={value}>{children}</MusicContext.Provider>
 }
 

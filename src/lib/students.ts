@@ -4,42 +4,18 @@ import { asset } from './asset'
 
 const clean = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : undefined)
 
-/** Normalises the JSON so blank strings behave exactly like missing fields. */
-export const students: Student[] = (raw as Partial<Student>[])
-  .filter((s): s is Student => Boolean(clean(s.id) && clean(s.name) && clean(s.currentPhoto)))
-  .map((s) => ({
-    id: s.id.trim(),
-    name: s.name.trim(),
-    currentPhoto: asset(s.currentPhoto.trim()),
-    nickname: clean(s.nickname),
-    quote: clean(s.quote),
-    university: clean(s.university),
-    major: clean(s.major),
-    city: clean(s.city),
-    babyPhoto: asset(clean(s.babyPhoto)),
-    reel: asset(clean(s.reel)),
-    tenYearsGoal: clean(s.tenYearsGoal),
-    funFacts: Array.isArray(s.funFacts) ? s.funFacts.map(clean).filter((f): f is string => !!f) : undefined,
-  }))
+/** Loads students.json, skipping incomplete rows and treating blank strings as missing. */
+export const students: Student[] = (raw as Partial<Student>[]).flatMap((s) => {
+  const id = clean(s.id)
+  const name = clean(s.name)
+  const photo = clean(s.photo)
+  if (!id || !name || !photo) return []
+  return [{ id, name, photo: asset(photo), university: clean(s.university), quote: clean(s.quote) }]
+})
 
-export const studentById = (id: string | undefined) => students.find((s) => s.id === id)
-
-export const studentsWithReels = students.filter((s) => s.reel)
-
-export const UNDECIDED = 'Still deciding'
-
-export function groupByUniversity(list: Student[]) {
-  const map = new Map<string, Student[]>()
-  for (const s of list) {
-    const key = s.university ?? UNDECIDED
-    map.set(key, [...(map.get(key) ?? []), s])
-  }
-  return [...map.entries()]
-    .map(([university, people]) => ({ university, people }))
-    .sort((a, b) =>
-      a.university === UNDECIDED ? 1 : b.university === UNDECIDED ? -1 : b.people.length - a.people.length || a.university.localeCompare(b.university),
-    )
-}
+export const universities = [...new Set(students.map((s) => s.university).filter((u): u is string => !!u))].sort((a, b) =>
+  a.localeCompare(b),
+)
 
 export function initials(name: string) {
   return name

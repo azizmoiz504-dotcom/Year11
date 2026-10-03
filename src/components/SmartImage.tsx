@@ -19,7 +19,7 @@ export function SmartImage({ src, alt, fallbackName, eager, className = '', ...r
       <div
         role="img"
         aria-label={alt}
-        className={`flex items-center justify-center bg-gradient-to-b from-paper-2 to-line font-serif text-3xl text-muted ${className}`}
+        className={`flex items-center justify-center bg-line font-sans text-2xl font-medium text-muted ${className}`}
       >
         {fallbackName ? initials(fallbackName) : ''}
       </div>
@@ -34,7 +34,7 @@ export function SmartImage({ src, alt, fallbackName, eager, className = '', ...r
       decoding="async"
       onLoad={() => setLoaded(true)}
       onError={() => setFailed(true)}
-      className={`bg-paper-2 object-cover transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'} ${className}`}
+      className={`bg-line object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'} ${className}`}
       {...rest}
     />
   )

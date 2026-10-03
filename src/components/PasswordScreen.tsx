@@ -24,7 +24,7 @@ export function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
 
   return (
     <motion.main
-      className="fixed inset-0 z-40 flex items-center justify-center bg-paper px-6"
+      className="fixed inset-0 z-40 flex items-center justify-center bg-bg px-6"
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
     >
@@ -35,8 +35,8 @@ export function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-sm text-center"
       >
-        <p className="mb-3 text-[11px] uppercase tracking-[0.32em] text-accent">Members only</p>
-        <h1 className="font-serif text-4xl font-light">For the class of {config.classYear}</h1>
+        <p className="mb-3 text-sm text-muted">Members only</p>
+        <h1 className="font-serif text-5xl">For the class of {config.classYear}</h1>
         <p className="mt-3 text-sm text-muted">{config.password.hint}</p>
         <label htmlFor="pw" className="sr-only">
           Password
@@ -53,13 +53,13 @@ export function PasswordScreen({ onUnlock }: { onUnlock: () => void }) {
           }}
           aria-invalid={error}
           aria-describedby={error ? 'pw-error' : undefined}
-          className="mt-8 w-full rounded-full border border-line bg-paper-2 px-5 py-3.5 text-center text-base outline-none transition focus:border-accent"
+          className="mt-8 w-full rounded-full border border-line bg-surface px-5 py-3.5 text-center text-base outline-none transition focus:border-ink"
           placeholder="Password"
         />
-        <p id="pw-error" role="alert" className="mt-3 h-5 text-sm text-accent">
+        <p id="pw-error" role="alert" className="mt-3 h-5 text-sm text-red-600 dark:text-red-400">
           {error ? "That's not it. Try again?" : ''}
         </p>
-        <button type="submit" className="mt-2 rounded-full bg-ink px-8 py-3 text-sm tracking-wide text-paper transition hover:opacity-90">
+        <button type="submit" className="mt-2 rounded-full bg-ink px-8 py-3 text-sm tracking-wide text-bg transition hover:opacity-90">
           Open the yearbook
         </button>
       </motion.form>
