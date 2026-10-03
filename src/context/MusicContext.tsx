@@ -3,13 +3,17 @@ import { config } from '../config'
 import { asset } from '../lib/asset'
 
 /**
- * One <audio> element for the whole app, above the router, so the song never restarts.
+ * One <audio> element for the whole app, above the router, so the music never restarts.
+ * Plays config.music.songs in order and loops back to the first.
  *  - `wantsPlay` is the visitor's choice (play/pause), remembered for the session.
  *  - holds are temporary pauses requested by the videos; the song resumes when the
  *    last hold is released, if the visitor still wants it.
  */
 interface MusicState {
   playing: boolean
+  track: { title: string; artist: string }
+  trackCount: number
+  next: () => void
   wantsPlay: boolean
   held: boolean
   volume: number
@@ -26,6 +30,7 @@ interface MusicState {
 
 const MusicContext = createContext<MusicState | null>(null)
 const STORAGE_KEY = 'yb-music'
+const songs = config.music.enabled ? config.music.songs : []
 
 interface Saved {
   paused?: boolean
@@ -56,21 +61,41 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const [playing, setPlaying] = useState(false)
   const [wantsPlay, setWantsPlay] = useState(!saved.paused)
   const [held, setHeld] = useState(false)
-  const [volume, setVolumeState] = useState(saved.volume ?? config.song.volume)
+  const [index, setIndex] = useState(0)
+  const indexRef = useRef(0)
+  const [volume, setVolumeState] = useState(saved.volume ?? config.music.volume)
   const [muted, setMuted] = useState(saved.muted ?? false)
-  const [unavailable, setUnavailable] = useState(!config.song.enabled)
+  const [unavailable, setUnavailable] = useState(songs.length === 0)
   const wantsRef = useRef(wantsPlay)
   wantsRef.current = wantsPlay
+  const failed = useRef(new Set<number>())
+
+  /** Switches to song `i` (wrapping around) and keeps playing if it was playing. */
+  function goTo(i: number) {
+    const a = audioRef.current
+    if (!a || songs.length < 2) return
+    const n = ((i % songs.length) + songs.length) % songs.length
+    indexRef.current = n
+    setIndex(n)
+    a.src = asset(songs[n]!.src)
+    if (wantsRef.current && holds.current.size === 0) a.play().catch(() => setPlaying(false))
+  }
 
   const getAudio = useCallback(() => {
     if (!audioRef.current) {
-      const a = new Audio(asset(config.song.src))
-      a.loop = true
-      a.volume = saved.volume ?? config.song.volume
+      const a = new Audio(asset(songs[0]!.src))
+      a.loop = songs.length === 1
+      a.volume = saved.volume ?? config.music.volume
       a.muted = saved.muted ?? false
       a.addEventListener('play', () => setPlaying(true))
       a.addEventListener('pause', () => setPlaying(false))
+      a.addEventListener('ended', () => goTo(indexRef.current + 1))
       a.addEventListener('error', () => {
+        // Skip a missing or broken file; give up only if every song fails.
+        if (songs.length > 1 && !failed.current.has(indexRef.current)) {
+          failed.current.add(indexRef.current)
+          if (failed.current.size < songs.length) return goTo(indexRef.current + 1)
+        }
         setUnavailable(true)
         setPlaying(false)
       })
@@ -80,14 +105,14 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   }, [saved])
 
   const tryPlay = useCallback(() => {
-    if (!config.song.enabled || holds.current.size > 0) return
+    if (songs.length === 0 || holds.current.size > 0) return
     getAudio()
       .play()
       .catch(() => setPlaying(false))
   }, [getAudio])
 
   const start = useCallback(() => {
-    if (config.song.enabled && wantsRef.current) tryPlay()
+    if (songs.length > 0 && wantsRef.current) tryPlay()
   }, [tryPlay])
 
   const toggle = useCallback(() => {
@@ -138,17 +163,40 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!('mediaSession' in navigator) || !playing) return
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: config.song.title,
-      artist: config.song.artist,
+      title: songs[index]?.title ?? '',
+      artist: songs[index]?.artist ?? '',
       album: `Class of ${config.classYear}`,
     })
-  }, [playing])
+  }, [playing, index])
+
+  const next = useCallback(() => {
+    getAudio()
+    goTo(indexRef.current + 1)
+    // goTo only reads refs, so it is safe to leave out of the dependency list.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getAudio])
 
   useEffect(() => () => audioRef.current?.pause(), [])
 
   const value = useMemo(
-    () => ({ playing, wantsPlay, held, volume, muted, unavailable, start, toggle, setVolume, toggleMute, hold, release }),
-    [playing, wantsPlay, held, volume, muted, unavailable, start, toggle, setVolume, toggleMute, hold, release],
+    () => ({
+      playing,
+      track: { title: songs[index]?.title ?? '', artist: songs[index]?.artist ?? '' },
+      trackCount: songs.length,
+      next,
+      wantsPlay,
+      held,
+      volume,
+      muted,
+      unavailable,
+      start,
+      toggle,
+      setVolume,
+      toggleMute,
+      hold,
+      release,
+    }),
+    [playing, index, next, wantsPlay, held, volume, muted, unavailable, start, toggle, setVolume, toggleMute, hold, release],
   )
   return <MusicContext.Provider value={value}>{children}</MusicContext.Provider>
 }

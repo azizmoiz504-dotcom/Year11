@@ -52,3 +52,6 @@ export const CapIcon = (p: SVGProps<SVGSVGElement>) => (
 export const FlipIcon = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3" /><path d="M18 3v4h-4M6 21v-4h4" /></svg>
 )
+export const NextIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)} fill="currentColor" stroke="none"><path d="M5 5.8v12.4a.8.8 0 0 0 1.2.7l9.3-6.2a.8.8 0 0 0 0-1.4L6.2 5.1A.8.8 0 0 0 5 5.8Z" /><rect x="17" y="5" width="2.5" height="14" rx="1" /></svg>
+)

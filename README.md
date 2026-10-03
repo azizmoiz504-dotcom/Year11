@@ -63,8 +63,12 @@ Keep each video under about 50 MB. To shrink one:
 The music pauses while a video plays and comes back when it stops.
 
 ## Music
-Replace `public/media/music/song.mp3` with your song, then set the title and artist in `src/config.ts`.
-It starts when someone presses Enter on the intro screen. To remove the player, set `song.enabled: false`.
+Songs play in order and then loop. They start when someone presses **Enter** on the intro screen, and the player has a **Next** button when there's more than one song.
+To add a song, put the mp3 in `public/media/music/` and add a line to `music.songs` in `src/config.ts`:
+```ts
+{ src: '/media/music/my-song.mp3', title: 'Song title', artist: 'Artist' },
+```
+To turn music off, set `music.enabled: false`.
 
 ## Settings (`src/config.ts`)
 - `classYear`, `schoolName`, `tagline`

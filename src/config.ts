@@ -29,13 +29,14 @@ export const config = {
     signature: { src: '/media/videos/signature.mp4', poster: '/media/videos/signature.jpg' },
   } as Record<'tenYears' | 'signature', { src: string; poster?: string } | undefined>,
 
-  /** Background song at public/media/music/song.mp3. It starts when someone presses Enter. */
-  song: {
+  /**
+   * Background music: plays in order, then starts again from the top. It begins when someone presses Enter.
+   * Put the files in public/media/music/ and add a line per song. Set `enabled: false` to turn music off.
+   */
+  music: {
     enabled: true,
-    src: '/media/music/song.mp3',
-    title: 'Our Song',
-    artist: 'Placeholder Artist',
     volume: 0.6,
+    songs: [{ src: '/media/music/whered-all-the-time-go.mp3', title: "Where'd All the Time Go?", artist: 'Dr. Dog' }],
   },
 
   /**

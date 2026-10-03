@@ -53,8 +53,8 @@ export function Hero() {
               {photos[i] ? (
                 <img src={photos[i]} alt="" className="aspect-square w-full object-cover" />
               ) : (
-                // Empty frame until the class adds photos to the gallery.
-                <div className="aspect-square w-full bg-gradient-to-br from-sky2 via-sky to-navy opacity-80" />
+                // Blank, like an undeveloped photo, until the class adds photos to the gallery.
+                <div className="aspect-square w-full bg-[#eef0f3] shadow-[inset_0_1px_3px_rgb(0_0_0/0.08)]" />
               )}
             </motion.figure>
           </div>

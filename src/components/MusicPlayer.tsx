@@ -1,10 +1,9 @@
-import { config } from '../config'
 import { useMusic } from '../context/MusicContext'
-import { MuteIcon, PauseIcon, PlayIcon, VolumeIcon } from './Icons'
+import { MuteIcon, NextIcon, PauseIcon, PlayIcon, VolumeIcon } from './Icons'
 
 /** Small player pinned bottom-right. The song starts on the intro's Enter click. */
 export function MusicPlayer() {
-  const { playing, wantsPlay, held, volume, muted, unavailable, toggle, setVolume, toggleMute } = useMusic()
+  const { playing, track, trackCount, next, wantsPlay, held, volume, muted, unavailable, toggle, setVolume, toggleMute } = useMusic()
   if (unavailable) return null
   const shown = muted ? 0 : volume
 
@@ -30,9 +29,15 @@ export function MusicPlayer() {
       </span>
 
       <span className="flex min-w-0 flex-col leading-tight">
-        <span className="max-w-[8rem] truncate text-[13px] font-medium">{config.song.title}</span>
-        <span className="max-w-[8rem] truncate text-[11px] text-muted">{held && wantsPlay ? 'Paused for the video' : config.song.artist}</span>
+        <span className="max-w-[8rem] truncate text-[13px] font-medium">{track.title}</span>
+        <span className="max-w-[8rem] truncate text-[11px] text-muted">{held && wantsPlay ? 'Paused for the video' : track.artist}</span>
       </span>
+
+      {trackCount > 1 && (
+        <button type="button" onClick={next} aria-label="Next song" className="grid size-7 shrink-0 place-items-center rounded-full text-muted hover:text-ink">
+          <NextIcon width={16} height={16} />
+        </button>
+      )}
 
       <span className="hidden items-center gap-1.5 pl-1 sm:flex">
         <button
