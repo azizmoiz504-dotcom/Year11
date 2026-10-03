@@ -29,25 +29,19 @@ How it's protected:
 
 Without a backend configured, the site shows the cards from `src/data/students.json` instead.
 
-## Add a student by hand
-1. Add their photo at `public/media/students/<id>/photo.jpg`, for example `public/media/students/aisha-khan/photo.jpg`.
-   Portrait (4:5) works best. Resize to about 1200px tall, under 300 KB.
-2. Add an entry to `src/data/students.json`:
-```json
-{
-  "id": "aisha-khan",
-  "name": "Aisha Khan",
-  "university": "University of Sharjah",
-  "quote": "Their senior quote",
-  "photo": "/media/students/aisha-khan/photo.jpg",
-  "babyPhoto": "/media/students/aisha-khan/baby.jpg"
-}
-```
-`id`, `name` and `photo` are required. `university`, `quote` and `babyPhoto` are optional.
-`babyPhoto` is the "then" picture: hover over the portrait (computer) or tap it (phone) to swap between then and now.
-Spell each university the same way for everyone so the filter groups them together.
+## Add photos and quotes (no setup needed)
+Every senior already has a folder: `public/media/students/<their-name>/`, for example `public/media/students/aziz-hamid/`.
+- Upload their current photo as **`photo.jpg`** and their childhood photo as **`baby.jpg`**. They show up automatically.
+  Until then the card shows their initials, and then/now only appears once `baby.jpg` exists.
+- Add their university and quote in `src/data/students.json`, in their entry's `"university"` and `"quote"`.
 
-You can do all of this in the GitHub website (Add file → Upload files, then edit `students.json`). The live site updates a minute or two later.
+Easiest way, on the GitHub website:
+1. Open the repo, then go into `public/media/students/<their-name>/`.
+2. Click **Add file → Upload files**. Rename the photo to `photo.jpg` (or `baby.jpg`) before uploading, then click **Commit changes**.
+3. To change a quote, open `src/data/students.json`, click the ✏️ pencil, edit the text between the quotes, and click **Commit changes**.
+The live site updates by itself a couple of minutes later.
+
+Photos: portrait (taller than wide) works best. Phone photos are fine, but under about 2 MB keeps the site fast.
 
 ## Gallery
 Put photos in `public/media/gallery/` and list them in `src/data/gallery.json`:

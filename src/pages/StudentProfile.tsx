@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router'
 import { ArrowLeft, ArrowRight, CloseIcon } from '../components/Icons'
 import { SmartImage } from '../components/SmartImage'
 import { config } from '../config'
+import { useImageOk } from '../hooks/useImageOk'
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll'
 import { useData } from '../context/DataContext'
 import { backendEnabled } from '../lib/backend'
@@ -20,6 +21,7 @@ export function StudentProfile() {
   const location = useLocation()
   const index = students.findIndex((s) => s.id === id)
   const s = students[index]
+  const hasBaby = useImageOk(s?.babyPhoto)
   const [direction, setDirection] = useState(0)
   const closeBtn = useRef<HTMLButtonElement>(null)
   const opener = useRef<Element | null>(document.activeElement)
@@ -138,7 +140,7 @@ export function StudentProfile() {
                   <span className="absolute top-3 left-3 rounded-full bg-navy/70 px-2.5 py-1 text-[10px] font-medium tracking-[0.18em] text-white uppercase">
                     Now
                   </span>
-                  {s.babyPhoto && (
+                  {hasBaby && (
                     <figure className="polaroid absolute -right-1 -bottom-5 w-[42%] rotate-[5deg] sm:-right-6">
                       <SmartImage src={s.babyPhoto} alt={`${s.name} as a kid`} fallbackName={s.name} eager draggable={false} className="aspect-square w-full" />
                       <figcaption className="absolute inset-x-0 bottom-1 text-center font-serif text-sm text-navy italic">then</figcaption>

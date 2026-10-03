@@ -19,7 +19,7 @@ export function SmartImage({ src, alt, fallbackName, eager, className = '', ...r
       <div
         role="img"
         aria-label={alt}
-        className={`flex items-center justify-center bg-line font-sans text-2xl font-medium text-muted ${className}`}
+        className={`flex items-center justify-center bg-gradient-to-b from-sky to-navy font-serif text-3xl text-white/90 ${className}`}
       >
         {fallbackName ? initials(fallbackName) : ''}
       </div>

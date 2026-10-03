@@ -1,64 +1,114 @@
 [
   {
-    "id": "aisha-khan",
-    "name": "Aisha Khan",
-    "university": "University of Sharjah",
-    "quote": "We didn't realize we were making memories, we just knew we were having fun.",
-    "photo": "/media/students/aisha-khan/photo.jpg",
-    "babyPhoto": "/media/students/aisha-khan/baby.jpg"
+    "id": "abbas-bhikhapurwala",
+    "name": "Abbas Bhikhapurwala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/abbas-bhikhapurwala/photo.jpg",
+    "babyPhoto": "/media/students/abbas-bhikhapurwala/baby.jpg"
   },
   {
-    "id": "omar-haddad",
-    "name": "Omar Haddad",
-    "university": "American University of Sharjah",
-    "quote": "Home is wherever the canteen fries are.",
-    "photo": "/media/students/omar-haddad/photo.jpg",
-    "babyPhoto": "/media/students/omar-haddad/baby.jpg"
+    "id": "ibrahim-dalal",
+    "name": "Ibrahim Dalal",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/ibrahim-dalal/photo.jpg",
+    "babyPhoto": "/media/students/ibrahim-dalal/baby.jpg"
   },
   {
-    "id": "layla-mansour",
-    "name": "Layla Mansour",
-    "university": "NYU Abu Dhabi",
-    "quote": "Be the person your younger self needed.",
-    "photo": "/media/students/layla-mansour/photo.jpg",
-    "babyPhoto": "/media/students/layla-mansour/baby.jpg"
+    "id": "mohammed-bahrainwala",
+    "name": "Mohammed Bahrainwala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/mohammed-bahrainwala/photo.jpg",
+    "babyPhoto": "/media/students/mohammed-bahrainwala/baby.jpg"
   },
   {
-    "id": "yusuf-rahman",
-    "name": "Yusuf Rahman",
-    "university": "University of Sharjah",
-    "quote": "Small steps, every single day.",
-    "photo": "/media/students/yusuf-rahman/photo.jpg",
-    "babyPhoto": "/media/students/yusuf-rahman/baby.jpg"
+    "id": "taha-bombaywala",
+    "name": "Taha Bombaywala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/taha-bombaywala/photo.jpg",
+    "babyPhoto": "/media/students/taha-bombaywala/baby.jpg"
   },
   {
-    "id": "maya-fernandes",
-    "name": "Maya Fernandes",
-    "university": "University of Toronto",
-    "quote": "Kindness is free. Sprinkle that stuff everywhere.",
-    "photo": "/media/students/maya-fernandes/photo.jpg",
-    "babyPhoto": "/media/students/maya-fernandes/baby.jpg"
+    "id": "ali-asgar-patanwala",
+    "name": "Ali Asgar Patanwala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/ali-asgar-patanwala/photo.jpg",
+    "babyPhoto": "/media/students/ali-asgar-patanwala/baby.jpg"
   },
   {
-    "id": "zayd-ali",
-    "name": "Zayd Ali",
-    "university": "Khalifa University",
-    "quote": "It works on my machine.",
-    "photo": "/media/students/zayd-ali/photo.jpg",
-    "babyPhoto": "/media/students/zayd-ali/baby.jpg"
+    "id": "abdullah-jawad",
+    "name": "Abdullah Jawad",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/abdullah-jawad/photo.jpg",
+    "babyPhoto": "/media/students/abdullah-jawad/baby.jpg"
   },
   {
-    "id": "sara-ibrahim",
-    "name": "Sara Ibrahim",
-    "university": "American University of Sharjah",
-    "quote": "Colour outside the lines. That's where the good stuff is.",
-    "photo": "/media/students/sara-ibrahim/photo.jpg"
+    "id": "aliasger-chalawala",
+    "name": "Aliasger Chalawala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/aliasger-chalawala/photo.jpg",
+    "babyPhoto": "/media/students/aliasger-chalawala/baby.jpg"
   },
   {
-    "id": "adam-chen",
-    "name": "Adam Chen",
-    "quote": "Taking the scenic route.",
-    "photo": "/media/students/adam-chen/photo.jpg",
-    "babyPhoto": "/media/students/adam-chen/baby.jpg"
+    "id": "mohammed-fefco",
+    "name": "Mohammed Fefco",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/mohammed-fefco/photo.jpg",
+    "babyPhoto": "/media/students/mohammed-fefco/baby.jpg"
+  },
+  {
+    "id": "taha-shamim",
+    "name": "Taha Shamim",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/taha-shamim/photo.jpg",
+    "babyPhoto": "/media/students/taha-shamim/baby.jpg"
+  },
+  {
+    "id": "huzaifa-rampur",
+    "name": "Huzaifa Rampur",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/huzaifa-rampur/photo.jpg",
+    "babyPhoto": "/media/students/huzaifa-rampur/baby.jpg"
+  },
+  {
+    "id": "aziz-hamid",
+    "name": "Aziz Hamid",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/aziz-hamid/photo.jpg",
+    "babyPhoto": "/media/students/aziz-hamid/baby.jpg"
+  },
+  {
+    "id": "ali-asgar-tinwala",
+    "name": "Ali Asgar Tinwala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/ali-asgar-tinwala/photo.jpg",
+    "babyPhoto": "/media/students/ali-asgar-tinwala/baby.jpg"
+  },
+  {
+    "id": "mohammed-ratlami",
+    "name": "Mohammed Ratlami",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/mohammed-ratlami/photo.jpg",
+    "babyPhoto": "/media/students/mohammed-ratlami/baby.jpg"
+  },
+  {
+    "id": "adnan-nagdawala",
+    "name": "Adnan Nagdawala",
+    "university": "",
+    "quote": "",
+    "photo": "/media/students/adnan-nagdawala/photo.jpg",
+    "babyPhoto": "/media/students/adnan-nagdawala/baby.jpg"
   }
 ]

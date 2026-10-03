@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { useCanHover } from '../hooks/useCanHover'
+import { useImageOk } from '../hooks/useImageOk'
 import type { Student } from '../types'
 import { FlipIcon } from './Icons'
 import { SmartImage } from './SmartImage'
@@ -12,13 +13,15 @@ import { SmartImage } from './SmartImage'
 export function StudentCard({ student: s }: { student: Student }) {
   const canHover = useCanHover()
   const [then, setThen] = useState(false)
+  // Only offer then/now once the childhood photo actually exists.
+  const hasBaby = useImageOk(s.babyPhoto)
   const to = `/student/${s.id}`
   const hoverFlip = canHover ? 'group-hover:opacity-100' : ''
 
   const photo = (
     <div className="relative overflow-hidden bg-line shadow-[0_12px_30px_-18px_rgb(29_42_68/0.6)]">
       <SmartImage src={s.photo} alt={`${s.name} now`} fallbackName={s.name} width={800} height={1000} className="aspect-[4/5] w-full" />
-      {s.babyPhoto && (
+      {hasBaby && (
         <>
           {/* Opacity lives on a wrapper: SmartImage manages its own fade-in opacity. */}
           <div className={`absolute inset-0 transition-opacity duration-500 ${then ? 'opacity-100' : 'opacity-0'} ${hoverFlip}`}>
@@ -48,7 +51,7 @@ export function StudentCard({ student: s }: { student: Student }) {
 
   return (
     <li className="list-none text-center">
-      {canHover || !s.babyPhoto ? (
+      {canHover || !hasBaby ? (
         <Link to={to} state={{ modal: true }} className="group block" aria-label={`Open ${s.name}'s page`}>
           {photo}
           {caption}
