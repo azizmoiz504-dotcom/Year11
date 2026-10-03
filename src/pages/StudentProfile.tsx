@@ -5,13 +5,17 @@ import { ArrowLeft, ArrowRight, CloseIcon } from '../components/Icons'
 import { SmartImage } from '../components/SmartImage'
 import { config } from '../config'
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll'
-import { students } from '../lib/students'
+import { useData } from '../context/DataContext'
+import { backendEnabled } from '../lib/backend'
+import { StudentForm } from '../components/StudentForm'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
 /** A student's page, shown over the grid. Arrow keys or swiping move between classmates. */
 export function StudentProfile() {
   const { id } = useParams()
+  const { students, loading } = useData()
+  const [editing, setEditing] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const index = students.findIndex((s) => s.id === id)
@@ -50,13 +54,14 @@ export function StudentProfile() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (editing) return
       if (e.key === 'Escape') close()
       if (e.key === 'ArrowRight') go(1)
       if (e.key === 'ArrowLeft') go(-1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [close, go])
+  }, [close, go, editing])
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
     const swipe = info.offset.x + info.velocity.x * 0.2
@@ -99,7 +104,7 @@ export function StudentProfile() {
 
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           {!s ? (
-            <p className="px-6 py-24 text-center text-muted">We couldn't find that person.</p>
+            <p className="px-6 py-24 text-center text-muted">{loading ? 'Loading…' : "We couldn't find that person."}</p>
           ) : (
             <AnimatePresence mode="wait" custom={direction} initial={false}>
               <motion.article
@@ -142,11 +147,20 @@ export function StudentProfile() {
                 </div>
                 <div className="min-w-0 pb-4">
                   <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">{s.name}</h1>
-                  {s.university && <p className="mt-1.5 text-base text-muted">{s.university}</p>}
+                  {s.university && <p className="mt-1.5 text-base text-accent">{s.university}</p>}
                   {s.quote && (
                     <blockquote className="mt-8 border-t border-line pt-8 font-serif text-3xl leading-[1.15] text-balance italic sm:text-[2.6rem]">
                       “{s.quote}”
                     </blockquote>
+                  )}
+                  {backendEnabled && (
+                    <button
+                      type="button"
+                      onClick={() => setEditing(true)}
+                      className="mt-8 rounded-full border border-line px-4 py-2 text-sm transition-colors hover:bg-line"
+                    >
+                      This is me · edit my card
+                    </button>
                   )}
                 </div>
               </motion.article>
@@ -168,6 +182,9 @@ export function StudentProfile() {
           </nav>
         )}
       </motion.div>
+      <AnimatePresence>
+        {editing && s && <StudentForm key="edit" student={s} onClose={() => setEditing(false)} onDeleted={close} />}
+      </AnimatePresence>
     </motion.div>
   )
 }

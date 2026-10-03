@@ -6,7 +6,30 @@ Built with Vite + React + TypeScript + Tailwind. No backend.
 **Live site:** https://azizmoiz504-dotcom.github.io/Year11/
 It redeploys automatically (GitHub Actions → `gh-pages` branch) every time this branch is pushed.
 
-## Add a student
+## Let classmates add themselves
+Once this is set up, anyone with the link can tap **Add yourself** on an empty card and upload their photo, childhood photo, university and quote.
+They pick a PIN, which they need later to edit or remove their card. Anyone with the class code can also add photos to the gallery.
+
+One-time setup (about 5 minutes, free):
+1. Go to [supabase.com](https://supabase.com), sign up, and click **New project**. Any name and password work; pick a region near you.
+2. When it's ready, open **SQL Editor → New query**. Paste in everything from [`supabase/setup.sql`](supabase/setup.sql).
+   On the line marked `CHANGE ME`, replace `CHANGE-ME` with your class code (the word classmates type to add things). Press **Run**.
+3. Open **Project Settings → API** (or **Data API**). Copy the **Project URL** and the **anon public** key.
+4. Paste them into `src/config.ts` under `backend`, or send them to whoever maintains the site. The anon key is designed to be public, so it's safe in the code.
+
+How it's protected:
+- Adding a card or a gallery photo needs the class code. It's checked in the database, so it can't be skipped.
+- Editing or removing a card needs that card's PIN.
+- PINs and the class code are stored hashed, and visitors can't read them.
+- The site has room for `classSize` cards (14). The database enforces the same limit (`max_students` in `setup.sql`).
+- To delete anything by hand, use the Supabase dashboard (**Table Editor** → `students` or `gallery`).
+
+To change the class code later, run this in the SQL Editor:
+`update settings set class_code_hash = extensions.crypt('new-code', extensions.gen_salt('bf'));`
+
+Without a backend configured, the site shows the cards from `src/data/students.json` instead.
+
+## Add a student by hand
 1. Add their photo at `public/media/students/<id>/photo.jpg`, for example `public/media/students/aisha-khan/photo.jpg`.
    Portrait (4:5) works best. Resize to about 1200px tall, under 300 KB.
 2. Add an entry to `src/data/students.json`:
@@ -51,7 +74,8 @@ It starts when someone presses Enter on the intro screen. To remove the player, 
 
 ## Settings (`src/config.ts`)
 - `classYear`, `schoolName`, `tagline`
-- `graduationDay` for the countdown on the cover
+- `graduationDay` for the days-left countdown on the cover (it drops by one every midnight)
+- `classSize`: how many cards the seniors grid has room for
 - `password.enabled: true` adds a password screen. It's a light gate, not real security.
 
 ## Run locally

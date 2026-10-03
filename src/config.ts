@@ -6,6 +6,18 @@ export const config = {
   schoolName: 'Our School',
   tagline: 'the last chapter',
 
+  /** How many seniors there are. Empty spots show as "Add yourself" cards until everyone has joined. */
+  classSize: 14,
+
+  /**
+   * Lets classmates add and edit their own cards and gallery photos (see README → "Let classmates add themselves").
+   * Paste your Supabase project URL and anon public key here. Leave empty to use src/data/*.json only.
+   */
+  backend: {
+    supabaseUrl: '',
+    supabaseAnonKey: '',
+  },
+
   /** Countdown on the cover. YYYY-MM-DD in the visitor's local time. */
   graduationDay: '2027-06-17',
 

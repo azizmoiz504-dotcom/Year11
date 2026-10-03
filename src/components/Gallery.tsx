@@ -1,13 +1,18 @@
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll'
-import { gallery, type GalleryPhoto } from '../lib/gallery'
+import { useData } from '../context/DataContext'
+import { backendEnabled } from '../lib/backend'
+import type { GalleryPhoto } from '../lib/gallery'
+import { GalleryUpload } from './GalleryUpload'
 import { ArrowLeft, ArrowRight, CloseIcon } from './Icons'
 
 /** Masonry wall of the year's photos. Tap one to open it full screen. */
 export function Gallery() {
+  const { gallery } = useData()
   const [open, setOpen] = useState<number | null>(null)
-  if (gallery.length === 0) return null
+  const [adding, setAdding] = useState(false)
+  if (gallery.length === 0 && !backendEnabled) return null
 
   return (
     <section id="gallery" className="mx-auto max-w-7xl scroll-mt-14 px-4 py-20 sm:px-6 sm:py-28">
@@ -17,7 +22,18 @@ export function Gallery() {
           <h2 className="font-serif text-5xl leading-none font-light sm:text-6xl">Gallery</h2>
           <p className="mt-3 text-[15px] text-muted">The year, in photos.</p>
         </div>
-        <p className="text-sm text-muted tabular-nums">{gallery.length} photos</p>
+        <div className="flex items-center gap-3">
+          <p className="hidden text-sm text-muted tabular-nums sm:block">{gallery.length} photos</p>
+          {backendEnabled && (
+            <button
+              type="button"
+              onClick={() => setAdding(true)}
+              className="rounded-full bg-blue px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            >
+              + Add photos
+            </button>
+          )}
+        </div>
       </div>
 
       <ul className="columns-2 gap-2 sm:columns-3 sm:gap-3 lg:columns-4">
@@ -40,6 +56,8 @@ export function Gallery() {
         ))}
       </ul>
 
+      <AnimatePresence>{adding && <GalleryUpload onClose={() => setAdding(false)} />}</AnimatePresence>
+      {gallery.length === 0 && <p className="py-10 text-center text-muted">No photos yet. Be the first to add one.</p>}
       <AnimatePresence>{open !== null && <Lightbox photos={gallery} index={open} onChange={setOpen} onClose={() => setOpen(null)} />}</AnimatePresence>
     </section>
   )

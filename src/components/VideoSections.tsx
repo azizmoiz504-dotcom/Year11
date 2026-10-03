@@ -9,8 +9,7 @@ export function TenYearsVideo() {
     <section id="ten-years" className="scroll-mt-14 bg-navy text-cream">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 sm:py-28 md:grid-cols-[1fr_20rem] md:gap-20">
         <div>
-          <p className="text-[11px] font-medium tracking-[0.35em] text-sky uppercase">The class reel</p>
-          <h2 className="mt-4 font-serif text-5xl leading-[0.95] font-light sm:text-7xl">
+          <h2 className="font-serif text-5xl leading-[0.95] font-light sm:text-7xl">
             In 10 years<span className="text-sky">…</span>
           </h2>
           <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cream/75">

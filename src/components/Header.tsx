@@ -1,16 +1,18 @@
 import { config } from '../config'
 import { scrollToSection } from '../lib/asset'
-import { gallery } from '../lib/gallery'
+import { useData } from '../context/DataContext'
 import { ThemeToggle } from './ThemeToggle'
 
-const links = [
+const allLinks = (galleryCount: number) => [
   { id: 'seniors', label: 'Seniors', show: true },
   { id: 'ten-years', label: '10 years', show: Boolean(config.videos.tenYears) },
-  { id: 'gallery', label: 'Gallery', show: gallery.length > 0 },
+  { id: 'gallery', label: 'Gallery', show: galleryCount > 0 },
   { id: 'signatures', label: 'Signatures', show: Boolean(config.videos.signature) },
 ].filter((l) => l.show)
 
 export function Header() {
+  const { gallery } = useData()
+  const links = allLinks(gallery.length)
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/90 pt-[env(safe-area-inset-top)] backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6">

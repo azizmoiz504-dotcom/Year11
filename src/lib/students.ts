@@ -13,9 +13,8 @@ export const students: Student[] = (raw as Partial<Student>[]).flatMap((s) => {
   return [{ id, name, photo: asset(photo), babyPhoto: asset(clean(s.babyPhoto)), university: clean(s.university), quote: clean(s.quote) }]
 })
 
-export const universities = [...new Set(students.map((s) => s.university).filter((u): u is string => !!u))].sort((a, b) =>
-  a.localeCompare(b),
-)
+export const universitiesOf = (list: Student[]) =>
+  [...new Set(list.map((s) => s.university).filter((u): u is string => !!u))].sort((a, b) => a.localeCompare(b))
 
 export function initials(name: string) {
   return name

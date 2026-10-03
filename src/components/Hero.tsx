@@ -2,9 +2,8 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { config } from '../config'
 import { useNow } from '../hooks/useNow'
-import { diffParts, fmt, localDate, pad } from '../lib/dates'
-import { gallery } from '../lib/gallery'
-import { students } from '../lib/students'
+import { daysUntil, fmt, localDate } from '../lib/dates'
+import { useData } from '../context/DataContext'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const SPOTS = [
@@ -16,20 +15,12 @@ const SPOTS = [
   { pos: 'hidden lg:block right-[28%] bottom-[2%]', rotate: -3 },
 ]
 
-function Counter({ value, label, ticker }: { value: string; label: string; ticker?: string }) {
-  return (
-    <div className="flex flex-col items-center">
-      <span className="font-serif text-4xl font-light tabular-nums sm:text-6xl">{value}</span>
-      <span className="mt-2 text-[11px] tracking-[0.2em] text-muted uppercase">{label}</span>
-      {ticker && <span className="mt-1 text-[12px] text-accent tabular-nums">{ticker}</span>}
-    </div>
-  )
-}
-
-/** Cover: big class title, graduation countdown, and polaroids from the gallery scattered around it. */
+/** Cover: big class title, days-until-graduation countdown, and polaroids from the gallery scattered around it. */
 export function Hero() {
-  const now = useNow(1000)
-  const grad = diffParts(now, localDate(config.graduationDay))
+  const { gallery, students } = useData()
+  // Re-checks every minute, so the number drops by one at midnight.
+  const now = useNow(60_000)
+  const days = daysUntil(localDate(config.graduationDay), now)
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const yTitle = useTransform(scrollYProgress, [0, 1], ['0%', '25%'])
@@ -96,13 +87,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.3, ease }}
-          className="mt-10 flex items-start justify-center"
+          className="mt-10 flex flex-col items-center"
         >
-          <Counter
-            value={fmt(grad.days)}
-            label={grad.future ? 'days until graduation' : 'days since graduation'}
-            ticker={`${pad(grad.hours)}:${pad(grad.minutes)}:${pad(grad.seconds)}`}
-          />
+          <span className="font-serif text-5xl font-light tabular-nums sm:text-6xl">{fmt(Math.abs(days))}</span>
+          <span className="mt-2 text-[11px] tracking-[0.2em] text-muted uppercase">
+            {days > 0 ? (days === 1 ? 'day until graduation' : 'days until graduation') : days === 0 ? 'graduation is today' : 'days since graduation'}
+          </span>
         </motion.div>
       </motion.div>
 
