@@ -6,6 +6,14 @@ Built with Vite + React + TypeScript + Tailwind. No backend.
 **Live site:** https://azizmoiz504-dotcom.github.io/Year11/
 It redeploys automatically (GitHub Actions → `gh-pages` branch) every time this branch is pushed.
 
+## Two sites from one codebase
+- **Boys** (default): seniors from `src/data/students.json`, database tables `students` / `gallery`.
+- **Boys + girls**: build with `VITE_SITE=all` (`npm run build:all`). Seniors come from `src/data/students-all.json` and the tables are `all_students` / `all_gallery` (set up with [`supabase/setup-all.sql`](supabase/setup-all.sql)).
+
+Per-site settings live in `src/site.ts`. Everything else (design, music, videos) is shared.
+On GitHub Pages the boys' site is at the root and the boys + girls site is under `/all/`.
+On Vercel, make two projects from this repo and set the environment variable `VITE_SITE=all` on the second one.
+
 ## Let classmates fill in their own cards
 Every senior gets a card with their name and a personal password. They open the site, tap their card,
 choose **This is me**, enter their password, and add their photos (now and then), university and quote.

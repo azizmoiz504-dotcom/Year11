@@ -1,6 +1,7 @@
 import { config } from '../config'
 import type { Student } from '../types'
 import type { GalleryPhoto } from './gallery'
+import { site } from '../site'
 
 /**
  * Talks to Supabase over plain HTTP (no SDK). Reads are public; every write goes
@@ -12,6 +13,8 @@ const base = (config.backend.supabaseUrl || import.meta.env.VITE_SUPABASE_URL ||
 const key = (config.backend.supabaseAnonKey || import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim()
 
 export const backendEnabled = Boolean(base && key)
+/** Each site version (boys / all) has its own tables and functions, named with this prefix. */
+const t = site.tablePrefix
 
 const headers = () => ({ apikey: key, Authorization: `Bearer ${key}` })
 
@@ -44,7 +47,7 @@ interface StudentRow {
 }
 
 export async function fetchStudents(): Promise<Student[]> {
-  const rows = await request<StudentRow[]>('/rest/v1/students?select=id,name,university,quote,photo_url,baby_photo_url&order=created_at.asc')
+  const rows = await request<StudentRow[]>(`/rest/v1/${t}students?select=id,name,university,quote,photo_url,baby_photo_url&order=created_at.asc`)
   return rows.map((r) => ({
     id: r.id,
     name: r.name,
@@ -56,7 +59,7 @@ export async function fetchStudents(): Promise<Student[]> {
 }
 
 export async function fetchGallery(): Promise<GalleryPhoto[]> {
-  const rows = await request<{ url: string; caption: string | null }[]>('/rest/v1/gallery?select=url,caption&order=created_at.asc')
+  const rows = await request<{ url: string; caption: string | null }[]>(`/rest/v1/${t}gallery?select=url,caption&order=created_at.asc`)
   return rows.map((r) => ({ src: r.url, caption: r.caption ?? undefined }))
 }
 
@@ -77,7 +80,7 @@ export interface StudentInput {
 
 /** A senior edits their own card with their personal password. */
 export const updateStudent = (id: string, password: string, s: StudentInput) =>
-  rpc<null>('update_student', {
+  rpc<null>(`${t}update_student`, {
     p_id: id,
     p_password: password,
     p_university: s.university,
@@ -88,12 +91,12 @@ export const updateStudent = (id: string, password: string, s: StudentInput) =>
 
 /** Any senior's password can add gallery photos. */
 export const addGalleryPhoto = (password: string, url: string, caption: string) =>
-  rpc<string>('add_gallery_photo', { p_password: password, p_url: url, p_caption: caption })
+  rpc<string>(`${t}add_gallery_photo`, { p_password: password, p_url: url, p_caption: caption })
 
 /** Uploads an image to the public `photos` bucket and returns its public URL. */
 export async function uploadPhoto(blob: Blob): Promise<string> {
   const id = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`
-  const path = `${new Date().getFullYear()}/${id}.jpg`
+  const path = `${site.tablePrefix || 'boys_'}${new Date().getFullYear()}/${id}.jpg`
   await request(`/storage/v1/object/photos/${path}`, {
     method: 'POST',
     headers: { 'Content-Type': blob.type || 'image/jpeg', 'x-upsert': 'false' },
@@ -136,7 +139,7 @@ export function errorMessage(err: unknown): string {
   }
 }
 
-const PASSWORD_KEY = 'yb-password'
+const PASSWORD_KEY = `yb-password-${t || "boys"}`
 /** Remembers the visitor's own password on this device, so they only type it once. */
 export function rememberedPassword() {
   try {

@@ -1,3 +1,5 @@
+import { site } from './site'
+
 /**
  * Site settings. Seniors live in src/data/students.json, gallery photos in src/data/gallery.json.
  */
@@ -7,7 +9,7 @@ export const config = {
   tagline: 'the last chapter',
 
   /** How many seniors there are. Empty spots show as "Add yourself" cards until everyone has joined. */
-  classSize: 14,
+  classSize: site.classSize,
 
   /**
    * Lets classmates add and edit their own cards and gallery photos (see README → "Let classmates add themselves").

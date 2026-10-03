@@ -1,4 +1,8 @@
-import raw from '../data/students.json'
+import boys from '../data/students.json'
+import all from '../data/students-all.json'
+import { siteId } from '../site'
+
+const raw = siteId === 'all' ? all : boys
 import type { Student } from '../types'
 import { asset } from './asset'
 
