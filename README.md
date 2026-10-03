@@ -1,6 +1,6 @@
 # Class of 2026
 
-A simple static yearbook site: every student's photo, name, university and senior quote.
+A simple static yearbook site: every senior's portrait, name, university and quote, plus a gallery of the year.
 Built with Vite + React + TypeScript + Tailwind. No backend.
 
 **Live site:** https://azizmoiz504-dotcom.github.io/Year11/
@@ -23,6 +23,15 @@ It redeploys automatically (GitHub Actions → `gh-pages` branch) every time thi
 Spell each university the same way for everyone so the filter groups them together.
 
 You can do all of this in the GitHub website (Add file → Upload files, then edit `students.json`). The live site updates a minute or two later.
+
+## Gallery
+Put photos in `public/media/gallery/` and list them in `src/data/gallery.json`:
+```json
+[
+  { "src": "/media/gallery/sports-day.jpg", "caption": "Sports day" }
+]
+```
+Captions are optional. Resize photos to about 1600px on the long side so the page stays fast.
 
 ## Music
 Replace `public/media/music/song.mp3` with your song, then set the title and artist in `src/config.ts`.
