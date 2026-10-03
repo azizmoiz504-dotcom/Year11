@@ -162,3 +162,18 @@ input[type='range'].volume::-moz-range-thumb {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Names ribbon */
+.marquee {
+  animation: marquee 60s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none !important; flex-wrap: wrap; width: auto; justify-content: center; }
+  .marquee > ul[aria-hidden] { display: none; }
+}

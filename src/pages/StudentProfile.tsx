@@ -139,7 +139,7 @@ export function StudentProfile() {
       {student && prev && next && students.length > 1 && (
         <nav
           aria-label="Other classmates"
-          className="pointer-events-none fixed inset-x-0 bottom-[max(4.5rem,calc(env(safe-area-inset-bottom)+4rem))] z-30 flex justify-between px-3 sm:top-1/2 sm:bottom-auto sm:-translate-y-1/2 sm:px-5"
+          className="pointer-events-none fixed inset-x-0 top-[45%] z-30 flex -translate-y-1/2 justify-between px-2 sm:top-1/2 sm:px-5"
         >
           <NavButton onClick={() => go(-1)} label={`Previous: ${prev.name}`} name={prev.name}>
             <ArrowLeft />

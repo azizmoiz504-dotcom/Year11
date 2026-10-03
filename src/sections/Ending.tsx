@@ -16,11 +16,11 @@ export function Ending() {
   return (
     <section id="ending" className="relative scroll-mt-16 overflow-hidden px-4 pt-24 pb-40 sm:px-6 sm:pt-32">
       <div ref={ref}>
-      <div key={run} className="mx-auto grid max-w-6xl grid-cols-3 gap-1.5 sm:grid-cols-4 sm:gap-2 lg:grid-cols-6">
+      <div key={run} className="mx-auto flex max-w-5xl flex-wrap justify-center gap-1.5 sm:gap-2">
         {students.map((s, i) => {
           const delay = 0.6 + ((i * 7) % students.length) * 0.35
           return (
-            <div key={s.id} className="relative aspect-square overflow-hidden rounded-[2px] bg-paper-2">
+            <div key={s.id} className="relative aspect-square w-[calc((100%-0.75rem)/3)] overflow-hidden rounded-[2px] bg-paper-2 sm:w-[calc((100%-1.5rem)/4)]">
               <SmartImage src={s.currentPhoto} alt={`${s.name} now`} fallbackName={s.name} className="absolute inset-0 size-full" />
               <motion.div
                 className="absolute inset-0"

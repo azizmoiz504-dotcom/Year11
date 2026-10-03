@@ -7,6 +7,7 @@ import { ThemeToggle } from './ThemeToggle'
 
 const links = [
   { href: '#class', label: 'The class' },
+  { href: '#years', label: 'Our years' },
   { href: '#going', label: 'Where we go' },
   { href: '#reels', label: 'Reels' },
   { href: '#ending', label: 'Goodbye' },

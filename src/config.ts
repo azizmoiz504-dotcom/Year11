@@ -20,6 +20,17 @@ export const config = {
     volume: 0.6,
   },
 
+  /** "Our years" timeline. Add, remove or rewrite rows freely; `photo` is optional. */
+  timeline: [
+    { year: '2014', title: 'Day one', text: 'Tiny backpacks, huge nerves, and someone crying at the gate.' },
+    { year: '2016', title: 'The first field trip', text: 'The bus sing-along that nobody has ever lived down.' },
+    { year: '2018', title: 'Middle school', text: 'Lockers, group chats, and very questionable haircuts.' },
+    { year: '2020', title: 'The screen years', text: 'Cameras off, mics muted, still somehow together.' },
+    { year: '2023', title: 'Back in the hallways', text: 'Sports day, late-night projects, the canteen queue.' },
+    { year: '2025', title: 'The last first day', text: 'We said it would go slowly. It did not.' },
+    { year: '2026', title: 'Graduation', text: 'Caps in the air. The end of the beginning.' },
+  ] as { year: string; title: string; text: string; photo?: string }[],
+
   closing: {
     title: "We'll always have these years.",
     message:

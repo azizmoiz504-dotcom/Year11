@@ -99,7 +99,7 @@ export function Hero() {
               'hidden lg:block left-[40%] bottom-[-2%]',
             ]
             return (
-              <div key={s.id} className={`absolute w-24 opacity-30 sm:w-36 sm:opacity-60 dark:opacity-25 ${positions[i]}`}>
+              <div key={s.id} className={`absolute w-20 opacity-20 sm:w-36 sm:opacity-60 dark:opacity-25 ${positions[i]}`}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}

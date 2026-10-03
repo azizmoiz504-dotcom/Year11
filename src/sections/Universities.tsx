@@ -71,7 +71,7 @@ export function Universities() {
               viewport={{ once: true, margin: '0px 0px -8% 0px' }}
               transition={{ duration: 0.9, delay: (i % 3) * 0.1, ease }}
               className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-line bg-paper p-6 sm:p-7 ${
-                big ? 'sm:col-span-2 lg:row-span-2' : ''
+                big ? 'sm:col-span-2' : ''
               }`}
             >
               <div className="flex items-start justify-between gap-4">
@@ -86,7 +86,7 @@ export function Universities() {
                 </div>
               </div>
 
-              <div className={big ? 'mt-16' : 'mt-10'}>
+              <div className={big ? 'mt-12' : 'mt-10'}>
                 <h3 className={`font-serif leading-tight text-balance ${big ? 'text-3xl sm:text-4xl' : 'text-2xl'} ${g.university === UNDECIDED ? 'italic text-muted' : ''}`}>
                   {g.university}
                 </h3>
