@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useData } from '../context/DataContext'
-import { errorMessage, rememberedPassword, rememberPassword, shrinkImage, updateStudent, uploadPhoto } from '../lib/backend'
+import { errorMessage, rememberedPassword, rememberPassword, updateStudent, uploadImage } from '../lib/backend'
 import type { Student } from '../types'
 import { Field, fieldClass, Modal } from './Modal'
 import { PhotoPicker } from './PhotoPicker'
@@ -26,8 +26,8 @@ export function StudentForm({ student, onClose }: { student: Student; onClose: (
     if (!password.trim()) return setError('Enter your password.')
     try {
       setStatus('Uploading photos…')
-      const photoUrl = nowFile ? await uploadPhoto(await shrinkImage(nowFile)) : (student.photo ?? '')
-      const babyPhotoUrl = thenFile ? await uploadPhoto(await shrinkImage(thenFile)) : thenUrl
+      const photoUrl = nowFile ? await uploadImage(nowFile) : (student.photo ?? '')
+      const babyPhotoUrl = thenFile ? await uploadImage(thenFile) : thenUrl
       setStatus('Saving…')
       await updateStudent(student.id, password.trim(), { university: university.trim(), quote: quote.trim(), photoUrl, babyPhotoUrl })
       rememberPassword(password.trim())

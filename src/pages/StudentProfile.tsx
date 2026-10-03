@@ -15,13 +15,14 @@ const ease = [0.22, 1, 0.36, 1] as const
 /** A student's page, shown over the grid. Arrow keys or swiping move between classmates. */
 export function StudentProfile() {
   const { id } = useParams()
-  const { students, loading } = useData()
+  const { students, loading, live } = useData()
   const [editing, setEditing] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const index = students.findIndex((s) => s.id === id)
   const s = students[index]
-  const hasBaby = useImageOk(s?.babyPhoto)
+  const babyFileOk = useImageOk(live ? undefined : s?.babyPhoto)
+  const hasBaby = live ? Boolean(s?.babyPhoto) : babyFileOk
   const [direction, setDirection] = useState(0)
   const closeBtn = useRef<HTMLButtonElement>(null)
   const opener = useRef<Element | null>(document.activeElement)

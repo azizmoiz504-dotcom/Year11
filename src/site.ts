@@ -15,9 +15,12 @@ export const site = {
     tablePrefix: '',
     /** Cards shown when no backend is configured. */
     classSize: 14,
+    /** The first N people in the seniors list are boys; the rest are girls (used for the cover polaroids). */
+    boysCount: 14,
   },
   all: {
     tablePrefix: 'all_',
     classSize: 21,
+    boysCount: 14,
   },
 }[siteId]

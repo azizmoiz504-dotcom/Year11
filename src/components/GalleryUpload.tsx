@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useData } from '../context/DataContext'
-import { addGalleryPhoto, errorMessage, rememberedPassword, rememberPassword, shrinkImage, uploadPhoto } from '../lib/backend'
+import { addGalleryPhoto, errorMessage, rememberedPassword, rememberPassword, uploadImage } from '../lib/backend'
 import { Field, fieldClass, Modal } from './Modal'
 
 const MAX_FILES = 20
@@ -22,7 +22,7 @@ export function GalleryUpload({ onClose }: { onClose: () => void }) {
     try {
       for (let i = 0; i < files.length; i++) {
         setStatus(files.length > 1 ? `Uploading ${i + 1} of ${files.length}…` : 'Uploading…')
-        const url = await uploadPhoto(await shrinkImage(files[i]!, 1800))
+        const url = await uploadImage(files[i]!, 1800)
         await addGalleryPhoto(password.trim(), url, caption.trim())
       }
       rememberPassword(password.trim())

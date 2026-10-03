@@ -99,16 +99,57 @@ export const updateStudent = (id: string, password: string, s: StudentInput) =>
 export const addGalleryPhoto = (password: string, url: string, caption: string) =>
   rpc<string>(`${t}add_gallery_photo`, { p_password: password, p_url: url, p_caption: caption })
 
-/** Uploads an image to the public `photos` bucket and returns its public URL. */
-export async function uploadPhoto(blob: Blob): Promise<string> {
-  const id = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`
-  const path = `${site.tablePrefix || 'boys_'}${new Date().getFullYear()}/${id}.jpg`
+const PUBLIC_PREFIX = `${base}/storage/v1/object/public/photos/`
+const THUMB_SIDE = 480
+
+async function putObject(path: string, blob: Blob) {
   await request(`/storage/v1/object/photos/${path}`, {
     method: 'POST',
     headers: { 'Content-Type': blob.type || 'image/jpeg', 'x-upsert': 'false' },
     body: blob,
   })
-  return `${base}/storage/v1/object/public/photos/${path}`
+}
+
+const toThumbPath = (path: string) => path.replace(/\.jpg$/, '_t.jpg')
+
+/**
+ * Small version of an uploaded photo (`…_t.jpg`), used in grids so pages load fast.
+ * Returns the URL unchanged for anything that isn't one of our uploads.
+ */
+export function thumbUrl(url: string | undefined): string | undefined {
+  if (!url || !backendEnabled || !url.startsWith(PUBLIC_PREFIX) || !url.endsWith('.jpg') || url.endsWith('_t.jpg')) return url
+  return toThumbPath(url)
+}
+
+/**
+ * Uploads a photo to the public `photos` bucket in two sizes (full + thumbnail) and returns
+ * the full-size URL. `maxSide` caps the full-size photo's longest edge.
+ */
+export async function uploadImage(file: File, maxSide = 1400): Promise<string> {
+  const id = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+  const path = `${site.tablePrefix || 'boys_'}${new Date().getFullYear()}/${id}.jpg`
+  const [full, thumb] = await Promise.all([shrinkImage(file, maxSide), shrinkImage(file, THUMB_SIDE, 0.78)])
+  await Promise.all([putObject(path, full), putObject(toThumbPath(path), thumb)])
+  return PUBLIC_PREFIX + path
+}
+
+const healing = new Set<string>()
+/**
+ * Photos uploaded before thumbnails existed have no `_t.jpg`. When a page falls back to the
+ * full-size file, this quietly makes the thumbnail so the next visitor gets the fast version.
+ */
+export async function healThumb(fullUrl: string) {
+  if (!fullUrl.startsWith(PUBLIC_PREFIX) || healing.has(fullUrl)) return
+  healing.add(fullUrl)
+  try {
+    const res = await fetch(fullUrl)
+    if (!res.ok) return
+    const blob = await res.blob()
+    const thumb = await shrinkImage(new File([blob], 'photo.jpg', { type: blob.type }), THUMB_SIDE, 0.78)
+    await putObject(toThumbPath(fullUrl.slice(PUBLIC_PREFIX.length)), thumb)
+  } catch {
+    /* someone else made it first, or we're offline: harmless */
+  }
 }
 
 /** Shrinks a photo to at most `maxSide` pixels and re-encodes it as JPEG, so uploads stay small on mobile data. */

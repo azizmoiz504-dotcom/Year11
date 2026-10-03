@@ -2,7 +2,8 @@ import { AnimatePresence, motion, type PanInfo } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll'
 import { useData } from '../context/DataContext'
-import { backendEnabled } from '../lib/backend'
+import { backendEnabled, thumbUrl } from '../lib/backend'
+import { SmartImage } from './SmartImage'
 import type { GalleryPhoto } from '../lib/gallery'
 import { GalleryUpload } from './GalleryUpload'
 import { ArrowLeft, ArrowRight, CloseIcon } from './Icons'
@@ -45,7 +46,7 @@ export function Gallery() {
               aria-label={p.caption ? `Open photo: ${p.caption}` : `Open photo ${i + 1}`}
               className="group relative block w-full overflow-hidden rounded-lg bg-line"
             >
-              <img src={p.src} alt={p.caption ?? ''} loading="lazy" decoding="async" className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]" />
+              <SmartImage src={thumbUrl(p.src)} fallbackSrc={p.src} alt={p.caption ?? ''} className="block h-auto min-h-24 w-full transition-transform duration-500 group-hover:scale-[1.03]" />
               {p.caption && (
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-3 pt-8 pb-2.5 text-left text-[13px] text-white opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
                   {p.caption}
