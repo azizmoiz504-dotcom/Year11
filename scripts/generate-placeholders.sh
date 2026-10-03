@@ -18,12 +18,22 @@ for id in $(grep -o '"id": *"[^"]*"' src/data/students.json | sed 's/.*"\([^"]*\
     -composite -attenuate 0.2 +noise Gaussian -quality 72 -strip -interlace Plane "$out"
 done
 
+# Baby photos: faded film snapshot with a small silhouette.
+for id in $(grep -o '"babyPhoto": *"[^"]*"' src/data/students.json | sed 's#.*/students/\([^/]*\)/.*#\1#'); do
+  out="public/media/students/$id/baby.jpg"
+  need "$out" || continue
+  convert -size 700x700 "gradient:#dfe6ee-#9fb0c4" \
+    \( -size 700x700 xc:none -fill "#c7cdd5" -draw "ellipse 350,330 150,165 0,360" -fill "#7d8ea6" -draw "ellipse 350,760 250,250 180,360" -blur 0x2 \) \
+    -composite -modulate 100,60 -attenuate 0.45 +noise Gaussian -background "#5b6b82" -vignette 0x100 \
+    -quality 70 -strip -interlace Plane "$out"
+done
+
 # Gallery: soft blurred colour fields in mixed sizes.
 mkdir -p public/media/gallery
 i=0
-for spec in "1200x800|#d9a066-#7a4a2a" "800x1100|#8fb3c9-#2e4a5f" "1000x1000|#c97b84-#5a2a33" "1200x900|#a3b18a-#3a4a2a" \
-            "800x1000|#e6c88a-#8a6a3a" "1200x800|#9a8fc9-#3a2e5f" "900x1200|#c9a98f-#5f3e2e" "1200x700|#7fb0a8-#2a4a46" \
-            "1000x800|#d8b4a0-#6a3e30" "800x1100|#b0b8c9-#3a4250" "1200x900|#c9c08f-#5f582e" "1000x1000|#a0c4d8-#30506a"; do
+for spec in "1200x800|#8fb3d9-#1d2a44" "800x1100|#a9c6e8-#2f4a6f" "1000x1000|#9fa8d6-#2e3566" "1200x900|#88b9c4-#1f4450" \
+            "800x1000|#c3d4ea-#4a5f82" "1200x800|#7fa3cf-#24375e" "900x1200|#b7c4dd-#3b4766" "1200x700|#8fc4cf-#244a55" \
+            "1000x800|#a3b3e0-#2e3a6e" "800x1100|#b0c8dc-#33465c" "1200x900|#94aed4-#283b60" "1000x1000|#a0c4d8-#30506a"; do
   i=$((i+1)); out=$(printf "public/media/gallery/%02d.jpg" $i)
   need "$out" || continue
   IFS='|' read -r size grad <<<"$spec"

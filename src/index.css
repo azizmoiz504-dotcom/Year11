@@ -11,36 +11,37 @@
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
-  --color-coral: var(--coral);
-  --color-gold: var(--gold);
+  --color-accent: var(--accent);
+  --color-sky2: var(--sky2);
   --color-sky: var(--sky);
   --color-navy: #1d2a44;
-  --color-cream: #f4ead7;
+  --color-cream: #eef3fa;
+  --color-blue: #2f62b0;
 }
 
-/* Warm paper pages, navy ink, coral + gold + sky as the class colours.
-   Coloured bands (navy, coral) break up the scroll between sections. */
+/* Cool paper pages, navy ink, blues as the class colours.
+   Coloured bands (navy, blue) break up the scroll between sections. */
 :root {
-  --bg: #f4ead7;
-  --surface: #fbf6ec;
+  --bg: #edf1f7;
+  --surface: #f8fafd;
   --ink: #1d2a44;
-  --muted: #6f6a7a;
+  --muted: #66708a;
   --line: rgb(29 42 68 / 0.12);
-  --coral: #e0663f;
-  --gold: #e3a83b;
+  --accent: #2f62b0;
   --sky: #6f9fcf;
+  --sky2: #a9c6e8;
   color-scheme: light;
 }
 
 .dark {
-  --bg: #131b2e;
-  --surface: #1b2540;
-  --ink: #f4ead7;
-  --muted: #a3a6b8;
-  --line: rgb(244 234 215 / 0.12);
-  --coral: #f07a52;
-  --gold: #f0bb55;
+  --bg: #111a2c;
+  --surface: #19243d;
+  --ink: #eaf0f8;
+  --muted: #9ea9c2;
+  --line: rgb(234 240 248 / 0.12);
+  --accent: #7fb0ec;
   --sky: #8fb6de;
+  --sky2: #c3d8f0;
   color-scheme: dark;
 }
 
@@ -54,18 +55,18 @@ body {
 }
 
 ::selection {
-  background: var(--coral);
+  background: var(--sky);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--coral);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 8px;
 }
 
 .polaroid {
-  background: #fdfaf3;
+  background: #fbfcfe;
   padding: 7px 7px 26px;
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 14px 30px -12px rgb(29 42 68 / 0.45);
 }
@@ -88,7 +89,7 @@ input[type='range'].volume {
   appearance: none;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(to right, var(--coral) var(--val, 60%), var(--line) var(--val, 60%));
+  background: linear-gradient(to right, var(--accent) var(--val, 60%), var(--line) var(--val, 60%));
 }
 input[type='range'].volume::-webkit-slider-thumb {
   -webkit-appearance: none;

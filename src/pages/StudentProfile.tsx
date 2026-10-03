@@ -121,14 +121,25 @@ export function StudentProfile() {
                 onDragEnd={onDragEnd}
                 className="grid gap-6 px-4 pb-6 sm:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] sm:items-center sm:gap-10 sm:px-8 sm:pb-8"
               >
-                <SmartImage
-                  src={s.photo}
-                  alt={s.name}
-                  fallbackName={s.name}
-                  eager
-                  draggable={false}
-                  className="aspect-[4/5] w-full rounded-2xl"
-                />
+                <div className="relative">
+                  <SmartImage
+                    src={s.photo}
+                    alt={`${s.name} now`}
+                    fallbackName={s.name}
+                    eager
+                    draggable={false}
+                    className="aspect-[4/5] w-full rounded-2xl"
+                  />
+                  <span className="absolute top-3 left-3 rounded-full bg-navy/70 px-2.5 py-1 text-[10px] font-medium tracking-[0.18em] text-white uppercase">
+                    Now
+                  </span>
+                  {s.babyPhoto && (
+                    <figure className="polaroid absolute -right-1 -bottom-5 w-[42%] rotate-[5deg] sm:-right-6">
+                      <SmartImage src={s.babyPhoto} alt={`${s.name} as a kid`} fallbackName={s.name} eager draggable={false} className="aspect-square w-full" />
+                      <figcaption className="absolute inset-x-0 bottom-1 text-center font-serif text-sm text-navy italic">then</figcaption>
+                    </figure>
+                  )}
+                </div>
                 <div className="min-w-0 pb-4">
                   <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">{s.name}</h1>
                   {s.university && <p className="mt-1.5 text-base text-muted">{s.university}</p>}

@@ -10,7 +10,7 @@ export const students: Student[] = (raw as Partial<Student>[]).flatMap((s) => {
   const name = clean(s.name)
   const photo = clean(s.photo)
   if (!id || !name || !photo) return []
-  return [{ id, name, photo: asset(photo), university: clean(s.university), quote: clean(s.quote) }]
+  return [{ id, name, photo: asset(photo), babyPhoto: asset(clean(s.babyPhoto)), university: clean(s.university), quote: clean(s.quote) }]
 })
 
 export const universities = [...new Set(students.map((s) => s.university).filter((u): u is string => !!u))].sort((a, b) =>

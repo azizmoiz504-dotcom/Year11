@@ -30,7 +30,7 @@ export function Home({ hidden }: { hidden?: boolean }) {
         <section id="seniors" className="mx-auto max-w-7xl scroll-mt-14 px-4 py-20 sm:px-6 sm:py-28">
           <div className="mb-8 flex flex-col gap-5 sm:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="mb-3 text-[11px] font-medium tracking-[0.35em] text-coral uppercase">{students.length} of us</p>
+              <p className="mb-3 text-[11px] font-medium tracking-[0.35em] text-accent uppercase">{students.length} of us</p>
               <h2 className="font-serif text-5xl leading-none font-light sm:text-6xl">Seniors</h2>
               <p className="mt-3 text-[15px] text-muted">Tap anyone to see their page.</p>
             </div>

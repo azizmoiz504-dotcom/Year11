@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { config } from '../config'
 import { useNow } from '../hooks/useNow'
-import { scrollToSection } from '../lib/asset'
 import { diffParts, fmt, localDate, pad } from '../lib/dates'
 import { gallery } from '../lib/gallery'
 import { students } from '../lib/students'
@@ -19,18 +18,17 @@ const SPOTS = [
 
 function Counter({ value, label, ticker }: { value: string; label: string; ticker?: string }) {
   return (
-    <div className="flex flex-col items-center px-4 sm:px-8">
+    <div className="flex flex-col items-center">
       <span className="font-serif text-4xl font-light tabular-nums sm:text-6xl">{value}</span>
       <span className="mt-2 text-[11px] tracking-[0.2em] text-muted uppercase">{label}</span>
-      {ticker && <span className="mt-1 text-[11px] text-coral tabular-nums">{ticker}</span>}
+      {ticker && <span className="mt-1 text-[12px] text-accent tabular-nums">{ticker}</span>}
     </div>
   )
 }
 
-/** Cover: big class title, live counters, and polaroids from the gallery scattered around it. */
+/** Cover: big class title, graduation countdown, and polaroids from the gallery scattered around it. */
 export function Hero() {
   const now = useNow(1000)
-  const since = diffParts(localDate(config.firstDay), now)
   const grad = diffParts(now, localDate(config.graduationDay))
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
@@ -47,7 +45,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 opacity-70 dark:opacity-40"
         style={{
           background:
-            'radial-gradient(35% 30% at 20% 25%, color-mix(in srgb, var(--coral) 35%, transparent), transparent 70%), radial-gradient(35% 30% at 80% 70%, color-mix(in srgb, var(--sky) 40%, transparent), transparent 70%), radial-gradient(30% 25% at 70% 20%, color-mix(in srgb, var(--gold) 35%, transparent), transparent 70%)',
+            'radial-gradient(35% 30% at 20% 25%, color-mix(in srgb, var(--sky) 40%, transparent), transparent 70%), radial-gradient(35% 30% at 80% 70%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%), radial-gradient(30% 25% at 70% 20%, color-mix(in srgb, var(--sky2) 45%, transparent), transparent 70%)',
         }}
       />
 
@@ -68,14 +66,6 @@ export function Hero() {
       </motion.div>
 
       <motion.div style={{ y: yTitle, opacity: fade }} className="relative z-10 text-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.3 }}
-          className="mb-4 text-[11px] font-medium tracking-[0.4em] text-coral uppercase"
-        >
-          {config.schoolName} · Yearbook
-        </motion.p>
         <h1 className="font-serif leading-[0.85] font-light tracking-tight">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
@@ -89,7 +79,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.4, delay: 0.6, ease }}
-            className="block text-[18vw] text-coral italic sm:text-[9rem] lg:text-[11rem]"
+            className="block text-[18vw] text-accent italic sm:text-[9rem] lg:text-[11rem]"
           >
             {config.classYear}
           </motion.span>
@@ -106,9 +96,8 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.3, ease }}
-          className="mt-10 flex items-start justify-center divide-x divide-line"
+          className="mt-10 flex items-start justify-center"
         >
-          <Counter value={fmt(since.days)} label="days since day one" />
           <Counter
             value={fmt(grad.days)}
             label={grad.future ? 'days until graduation' : 'days since graduation'}
@@ -117,21 +106,6 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      <motion.a
-        href="#seniors"
-        onClick={(e) => scrollToSection(e, 'seniors')}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-7 z-10 flex flex-col items-center gap-2 text-[10px] tracking-[0.3em] text-muted uppercase"
-      >
-        Scroll
-        <motion.span
-          className="block h-8 w-px bg-current"
-          animate={{ scaleY: [0.3, 1, 0.3], originY: 0 }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </motion.a>
     </section>
   )
 }

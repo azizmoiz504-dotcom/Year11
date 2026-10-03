@@ -16,10 +16,12 @@ It redeploys automatically (GitHub Actions → `gh-pages` branch) every time thi
   "name": "Aisha Khan",
   "university": "University of Sharjah",
   "quote": "Their senior quote",
-  "photo": "/media/students/aisha-khan/photo.jpg"
+  "photo": "/media/students/aisha-khan/photo.jpg",
+  "babyPhoto": "/media/students/aisha-khan/baby.jpg"
 }
 ```
-`id`, `name` and `photo` are required. `university` and `quote` are optional.
+`id`, `name` and `photo` are required. `university`, `quote` and `babyPhoto` are optional.
+`babyPhoto` is the "then" picture: hover over the portrait (computer) or tap it (phone) to swap between then and now.
 Spell each university the same way for everyone so the filter groups them together.
 
 You can do all of this in the GitHub website (Add file → Upload files, then edit `students.json`). The live site updates a minute or two later.
@@ -49,7 +51,7 @@ It starts when someone presses Enter on the intro screen. To remove the player, 
 
 ## Settings (`src/config.ts`)
 - `classYear`, `schoolName`, `tagline`
-- `firstDay` and `graduationDay` for the counters on the cover
+- `graduationDay` for the countdown on the cover
 - `password.enabled: true` adds a password screen. It's a light gate, not real security.
 
 ## Run locally

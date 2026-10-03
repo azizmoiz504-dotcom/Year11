@@ -25,7 +25,7 @@ export function IntroScreen({ onEnter }: { onEnter: () => void }) {
         transition={{ duration: 3 }}
         style={{
           background:
-            'radial-gradient(40% 35% at 30% 35%, rgb(224 102 63 / 0.35), transparent 70%), radial-gradient(40% 35% at 72% 62%, rgb(111 159 207 / 0.3), transparent 70%), radial-gradient(30% 25% at 55% 30%, rgb(227 168 59 / 0.25), transparent 70%)',
+            'radial-gradient(40% 35% at 30% 35%, rgb(111 159 207 / 0.38), transparent 70%), radial-gradient(40% 35% at 72% 62%, rgb(47 98 176 / 0.4), transparent 70%), radial-gradient(30% 25% at 55% 30%, rgb(169 198 232 / 0.22), transparent 70%)',
         }}
       />
       <motion.p
@@ -61,7 +61,7 @@ export function IntroScreen({ onEnter }: { onEnter: () => void }) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 1.7, ease }}
-        className="relative mt-12 rounded-full bg-coral px-11 py-3.5 text-sm font-medium tracking-[0.3em] text-white uppercase shadow-[0_10px_30px_-10px_rgb(224_102_63/0.8)] transition-transform hover:scale-105 active:scale-95"
+        className="relative mt-12 rounded-full bg-cream px-11 py-3.5 text-sm font-medium tracking-[0.3em] text-navy uppercase shadow-[0_10px_30px_-10px_rgb(111_159_207/0.8)] transition-transform hover:scale-105 active:scale-95"
       >
         Enter
       </motion.button>

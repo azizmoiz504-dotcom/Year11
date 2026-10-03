@@ -6,8 +6,7 @@ export const config = {
   schoolName: 'Our School',
   tagline: 'the last chapter',
 
-  /** Hero counters. Dates are YYYY-MM-DD in the visitor's local time. */
-  firstDay: '2015-09-01',
+  /** Countdown on the cover. YYYY-MM-DD in the visitor's local time. */
   graduationDay: '2027-06-17',
 
   /** The two class videos. Remove a line (or the file) to hide that section. */

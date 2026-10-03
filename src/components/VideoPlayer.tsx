@@ -9,7 +9,7 @@ export function VideoPlayer({
   poster,
   label,
   className = '',
-  buttonClassName = 'bg-coral',
+  buttonClassName = 'bg-accent',
 }: {
   src: string
   poster?: string

@@ -18,14 +18,14 @@ export function MusicPlayer() {
         type="button"
         onClick={toggle}
         aria-label={wantsPlay ? 'Pause music' : 'Play music'}
-        className="grid size-9 shrink-0 place-items-center rounded-full bg-coral text-white transition active:scale-95"
+        className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-white transition active:scale-95"
       >
         {wantsPlay ? <PauseIcon width={15} height={15} /> : <PlayIcon width={15} height={15} />}
       </button>
 
       <span aria-hidden="true" className={`flex h-3.5 items-end gap-[2px] ${playing && !muted ? '' : 'eq-paused'}`}>
         {[0.9, 0.6, 1.1].map((d, i) => (
-          <span key={i} className="eq-bar block h-full w-[2.5px] rounded-full bg-coral" style={{ animationDuration: `${d}s` }} />
+          <span key={i} className="eq-bar block h-full w-[2.5px] rounded-full bg-accent" style={{ animationDuration: `${d}s` }} />
         ))}
       </span>
 
