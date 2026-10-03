@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Generates placeholder portraits, gallery photos and a placeholder song so the design
+# Generates placeholder portraits and a placeholder song so the design
 # can be previewed before real media is added. Needs ImageMagick (`convert`) and ffmpeg.
 # Only writes files that don't exist yet; pass --force to overwrite.
 set -euo pipefail
@@ -26,19 +26,6 @@ for id in $(grep -o '"babyPhoto": *"[^"]*"' src/data/students.json | sed 's#.*/s
     \( -size 700x700 xc:none -fill "#c7cdd5" -draw "ellipse 350,330 150,165 0,360" -fill "#7d8ea6" -draw "ellipse 350,760 250,250 180,360" -blur 0x2 \) \
     -composite -modulate 100,60 -attenuate 0.45 +noise Gaussian -background "#5b6b82" -vignette 0x100 \
     -quality 70 -strip -interlace Plane "$out"
-done
-
-# Gallery: soft blurred colour fields in mixed sizes.
-mkdir -p public/media/gallery
-i=0
-for spec in "1200x800|#8fb3d9-#1d2a44" "800x1100|#a9c6e8-#2f4a6f" "1000x1000|#9fa8d6-#2e3566" "1200x900|#88b9c4-#1f4450" \
-            "800x1000|#c3d4ea-#4a5f82" "1200x800|#7fa3cf-#24375e" "900x1200|#b7c4dd-#3b4766" "1200x700|#8fc4cf-#244a55" \
-            "1000x800|#a3b3e0-#2e3a6e" "800x1100|#b0c8dc-#33465c" "1200x900|#94aed4-#283b60" "1000x1000|#a0c4d8-#30506a"; do
-  i=$((i+1)); out=$(printf "public/media/gallery/%02d.jpg" $i)
-  need "$out" || continue
-  IFS='|' read -r size grad <<<"$spec"
-  convert -size "$size" "gradient:$grad" \( -size "$size" plasma:fractal -blur 0x30 -modulate 100,40 \) -compose softlight -composite \
-    -attenuate 0.25 +noise Gaussian -quality 70 -strip -interlace Plane "$out"
 done
 
 # A quiet ambient chord as a stand-in until the real song is added.

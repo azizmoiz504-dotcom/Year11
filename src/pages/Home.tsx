@@ -86,7 +86,7 @@ export function Home({ hidden }: { hidden?: boolean }) {
             <p className="mb-8 rounded-2xl border border-line bg-surface px-5 py-4 text-sm text-muted">Couldn't load the class right now. Check your connection and refresh.</p>
           )}
 
-          <ul className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-3 sm:gap-x-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-3 sm:gap-x-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 xl:gap-x-3">
             {loading
               ? Array.from({ length: config.classSize }, (_, i) => (
                   <li key={i} className="aspect-[4/5] animate-pulse bg-line" aria-hidden="true" />

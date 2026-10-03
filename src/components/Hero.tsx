@@ -41,16 +41,21 @@ export function Hero() {
       />
 
       <motion.div aria-hidden="true" style={{ y: yPhotos }} className="pointer-events-none absolute inset-0">
-        {photos.map((src, i) => (
-          <div key={src + i} className={`absolute w-20 sm:w-40 ${SPOTS[i]!.pos}`}>
+        {SPOTS.map((spot, i) => (
+          <div key={i} className={`absolute w-20 sm:w-40 ${spot.pos}`}>
             <motion.figure
               className="polaroid"
-              style={{ rotate: SPOTS[i]!.rotate }}
+              style={{ rotate: spot.rotate }}
               initial={{ opacity: 0, scale: 0.85, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1.4, delay: 0.5 + i * 0.15, ease }}
             >
-              <img src={src} alt="" className="aspect-square w-full object-cover" />
+              {photos[i] ? (
+                <img src={photos[i]} alt="" className="aspect-square w-full object-cover" />
+              ) : (
+                // Empty frame until the class adds photos to the gallery.
+                <div className="aspect-square w-full bg-gradient-to-br from-sky2 via-sky to-navy opacity-80" />
+              )}
             </motion.figure>
           </div>
         ))}

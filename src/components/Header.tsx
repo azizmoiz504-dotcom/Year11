@@ -11,8 +11,9 @@ const allLinks = (galleryCount: number) => [
 ].filter((l) => l.show)
 
 export function Header() {
-  const { gallery } = useData()
-  const links = allLinks(gallery.length)
+  const { gallery, live } = useData()
+  // With a backend the gallery is always shown, so people can add the first photos.
+  const links = allLinks(live ? Math.max(1, gallery.length) : gallery.length)
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/90 pt-[env(safe-area-inset-top)] backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6">

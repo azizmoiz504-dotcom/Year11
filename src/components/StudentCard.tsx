@@ -43,9 +43,11 @@ export function StudentCard({ student: s }: { student: Student }) {
 
   const caption = (
     <>
-      <h3 className="mt-3 text-[13px] leading-tight font-semibold tracking-[0.06em] uppercase sm:text-sm">{s.name}</h3>
-      {s.university && <p className="mt-1 text-[12px] leading-snug text-accent">{s.university}</p>}
-      {s.quote && <p className="mx-auto mt-2 max-w-[18rem] font-serif text-[16px] leading-snug italic">“{s.quote}”</p>}
+      <h3 className="mt-2.5 truncate text-[13px] leading-tight font-semibold whitespace-nowrap sm:text-sm xl:text-[12.5px]" title={s.name}>
+        {s.name}
+      </h3>
+      {s.quote && <p className="mx-auto mt-1.5 max-w-[18rem] font-serif text-[15px] leading-snug italic">“{s.quote}”</p>}
+      {s.university && <p className="mt-1.5 text-[11px] leading-snug text-accent">{s.university}</p>}
     </>
   )
 

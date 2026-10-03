@@ -3,7 +3,7 @@
  */
 export const config = {
   classYear: 2027,
-  schoolName: 'Our School',
+  schoolName: 'MSB Private School',
   tagline: 'the last chapter',
 
   /** How many seniors there are. Empty spots show as "Add yourself" cards until everyone has joined. */
