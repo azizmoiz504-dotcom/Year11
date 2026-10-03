@@ -159,7 +159,7 @@ export function StudentProfile() {
                       onClick={() => setEditing(true)}
                       className="mt-8 rounded-full border border-line px-4 py-2 text-sm transition-colors hover:bg-line"
                     >
-                      This is me · edit my card
+                      {s.photo ? 'This is me · edit my card' : 'This is me · add my photo & quote'}
                     </button>
                   )}
                 </div>
@@ -183,7 +183,7 @@ export function StudentProfile() {
         )}
       </motion.div>
       <AnimatePresence>
-        {editing && s && <StudentForm key="edit" student={s} onClose={() => setEditing(false)} onDeleted={close} />}
+        {editing && s && <StudentForm key="edit" student={s} onClose={() => setEditing(false)} />}
       </AnimatePresence>
     </motion.div>
   )

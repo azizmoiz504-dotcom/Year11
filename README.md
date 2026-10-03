@@ -6,26 +6,26 @@ Built with Vite + React + TypeScript + Tailwind. No backend.
 **Live site:** https://azizmoiz504-dotcom.github.io/Year11/
 It redeploys automatically (GitHub Actions → `gh-pages` branch) every time this branch is pushed.
 
-## Let classmates add themselves
-Once this is set up, anyone with the link can tap **Add yourself** on an empty card and upload their photo, childhood photo, university and quote.
-They pick a PIN, which they need later to edit or remove their card. Anyone with the class code can also add photos to the gallery.
+## Let classmates fill in their own cards
+Every senior gets a card with their name and a personal password. They open the site, tap their card,
+choose **This is me**, enter their password, and add their photos (now and then), university and quote.
+The same password lets them add photos to the gallery. Changes show up for everyone straight away.
 
-One-time setup (about 5 minutes, free):
-1. Go to [supabase.com](https://supabase.com), sign up, and click **New project**. Any name and password work; pick a region near you.
-2. When it's ready, open **SQL Editor → New query**. Paste in everything from [`supabase/setup.sql`](supabase/setup.sql).
-   On the line marked `CHANGE ME`, replace `CHANGE-ME` with your class code (the word classmates type to add things). Press **Run**.
-3. Open **Project Settings → API** (or **Data API**). Copy the **Project URL** and the **anon public** key.
-4. Paste them into `src/config.ts` under `backend`, or send them to whoever maintains the site. The anon key is designed to be public, so it's safe in the code.
+One-time setup (free):
+1. Create a project at [supabase.com](https://supabase.com). You may need to create an organization first: choose Personal and the Free plan.
+2. Make the seed block with everyone's names. It generates one password per person:
+   `python3 scripts/make-seed.py "Name One" "Name Two" ...`
+   Keep the output private: it contains the passwords. Don't commit it.
+3. In Supabase, open **SQL Editor → New query**. Paste [`supabase/setup.sql`](supabase/setup.sql) followed by the seed block's SQL, then press **Run**.
+4. In **Project Settings → API**, copy the **Project URL** and the **anon public** key into `src/config.ts` under `backend`.
+5. Send each classmate their own password.
 
 How it's protected:
-- Adding a card or a gallery photo needs the class code. It's checked in the database, so it can't be skipped.
-- Editing or removing a card needs that card's PIN.
-- PINs and the class code are stored hashed, and visitors can't read them.
-- The site has room for `classSize` cards (14). The database enforces the same limit (`max_students` in `setup.sql`).
-- To delete anything by hand, use the Supabase dashboard (**Table Editor** → `students` or `gallery`).
-
-To change the class code later, run this in the SQL Editor:
-`update settings set class_code_hash = extensions.crypt('new-code', extensions.gen_salt('bf'));`
+- A card can only be edited with that senior's password. It's checked inside the database, and passwords are stored hashed.
+- Gallery uploads need any senior's password.
+- To remove something by hand, use the Supabase dashboard (**Table Editor** → `students` or `gallery`).
+- To reset someone's password, run this in the SQL Editor:
+  `update students set pin_hash = extensions.crypt('new-password', extensions.gen_salt('bf')) where name = 'Their Name';`
 
 Without a backend configured, the site shows the cards from `src/data/students.json` instead.
 

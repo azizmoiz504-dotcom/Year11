@@ -26,7 +26,7 @@ export function Hero() {
   const yTitle = useTransform(scrollYProgress, [0, 1], ['0%', '25%'])
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0])
   const yPhotos = useTransform(scrollYProgress, [0, 1], ['0%', '-20%'])
-  const photos = (gallery.length ? gallery.map((g) => g.src) : students.map((s) => s.photo)).slice(0, SPOTS.length)
+  const photos = (gallery.length ? gallery.map((g) => g.src) : students.flatMap((s) => (s.photo ? [s.photo] : []))).slice(0, SPOTS.length)
 
   return (
     <section ref={ref} id="top" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-20">

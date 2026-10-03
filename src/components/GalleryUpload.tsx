@@ -1,16 +1,16 @@
 import { useState, type FormEvent } from 'react'
 import { useData } from '../context/DataContext'
-import { addGalleryPhoto, errorMessage, rememberClassCode, rememberedClassCode, shrinkImage, uploadPhoto } from '../lib/backend'
+import { addGalleryPhoto, errorMessage, rememberedPassword, rememberPassword, shrinkImage, uploadPhoto } from '../lib/backend'
 import { Field, fieldClass, Modal } from './Modal'
 
 const MAX_FILES = 20
 
-/** Anyone with the class code can add photos to the gallery. */
+/** Any senior can add photos to the gallery with their personal password. */
 export function GalleryUpload({ onClose }: { onClose: () => void }) {
   const { reload } = useData()
   const [files, setFiles] = useState<File[]>([])
   const [caption, setCaption] = useState('')
-  const [classCode, setClassCode] = useState(rememberedClassCode)
+  const [password, setPassword] = useState(rememberedPassword)
   const [status, setStatus] = useState('')
   const [error, setError] = useState('')
 
@@ -18,14 +18,14 @@ export function GalleryUpload({ onClose }: { onClose: () => void }) {
     e.preventDefault()
     setError('')
     if (files.length === 0) return setError('Choose at least one photo.')
-    if (!classCode.trim()) return setError('Enter the class code.')
+    if (!password.trim()) return setError('Enter your password.')
     try {
       for (let i = 0; i < files.length; i++) {
         setStatus(files.length > 1 ? `Uploading ${i + 1} of ${files.length}…` : 'Uploading…')
         const url = await uploadPhoto(await shrinkImage(files[i]!, 1800))
-        await addGalleryPhoto(classCode.trim(), url, caption.trim())
+        await addGalleryPhoto(password.trim(), url, caption.trim())
       }
-      rememberClassCode(classCode.trim())
+      rememberPassword(password.trim())
       await reload()
       onClose()
     } catch (err) {
@@ -76,8 +76,16 @@ export function GalleryUpload({ onClose }: { onClose: () => void }) {
         <Field label="Caption" hint="Optional. Used for every photo in this batch.">
           <input id="g-caption" className={fieldClass} value={caption} onChange={(e) => setCaption(e.target.value)} maxLength={120} placeholder="e.g. Sports day" />
         </Field>
-        <Field label="Class code *" hint="Ask in the group chat.">
-          <input id="g-code" className={fieldClass} value={classCode} onChange={(e) => setClassCode(e.target.value)} autoComplete="off" />
+        <Field label="Your password" hint="The one you were sent for your card.">
+          <input
+            id="g-password"
+            className={fieldClass}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            autoCapitalize="none"
+            spellCheck={false}
+          />
         </Field>
         {error && (
           <p role="alert" className="rounded-xl bg-red-500/10 px-3.5 py-2.5 text-sm text-red-700 dark:text-red-300">

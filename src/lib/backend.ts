@@ -4,7 +4,7 @@ import type { GalleryPhoto } from './gallery'
 
 /**
  * Talks to Supabase over plain HTTP (no SDK). Reads are public; every write goes
- * through a database function that checks the class code or the card's PIN.
+ * through a database function that checks the senior's personal password.
  * See supabase/setup.sql for the rules.
  */
 // Values in config.ts win; VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY env vars work too (handy on Vercel/Netlify).
@@ -39,7 +39,7 @@ interface StudentRow {
   name: string
   university: string | null
   quote: string | null
-  photo_url: string
+  photo_url: string | null
   baby_photo_url: string | null
 }
 
@@ -50,7 +50,7 @@ export async function fetchStudents(): Promise<Student[]> {
     name: r.name,
     university: r.university ?? undefined,
     quote: r.quote ?? undefined,
-    photo: r.photo_url,
+    photo: r.photo_url ?? undefined,
     babyPhoto: r.baby_photo_url ?? undefined,
   }))
 }
@@ -69,39 +69,26 @@ function rpc<T>(fn: string, args: Record<string, unknown>) {
 }
 
 export interface StudentInput {
-  name: string
   university: string
   quote: string
   photoUrl: string
   babyPhotoUrl: string
 }
 
-export const addStudent = (classCode: string, pin: string, s: StudentInput) =>
-  rpc<string>('add_student', {
-    p_class_code: classCode,
-    p_pin: pin,
-    p_name: s.name,
-    p_university: s.university,
-    p_quote: s.quote,
-    p_photo_url: s.photoUrl,
-    p_baby_photo_url: s.babyPhotoUrl,
-  })
-
-export const updateStudent = (id: string, pin: string, s: StudentInput) =>
+/** A senior edits their own card with their personal password. */
+export const updateStudent = (id: string, password: string, s: StudentInput) =>
   rpc<null>('update_student', {
     p_id: id,
-    p_pin: pin,
-    p_name: s.name,
+    p_password: password,
     p_university: s.university,
     p_quote: s.quote,
     p_photo_url: s.photoUrl,
     p_baby_photo_url: s.babyPhotoUrl,
   })
 
-export const deleteStudent = (id: string, pin: string) => rpc<null>('delete_student', { p_id: id, p_pin: pin })
-
-export const addGalleryPhoto = (classCode: string, url: string, caption: string) =>
-  rpc<string>('add_gallery_photo', { p_class_code: classCode, p_url: url, p_caption: caption })
+/** Any senior's password can add gallery photos. */
+export const addGalleryPhoto = (password: string, url: string, caption: string) =>
+  rpc<string>('add_gallery_photo', { p_password: password, p_url: url, p_caption: caption })
 
 /** Uploads an image to the public `photos` bucket and returns its public URL. */
 export async function uploadPhoto(blob: Blob): Promise<string> {
@@ -138,14 +125,8 @@ export async function shrinkImage(file: File, maxSide = 1400, quality = 0.82): P
 export function errorMessage(err: unknown): string {
   const code = err instanceof BackendError ? err.code : 'unknown'
   switch (code) {
-    case 'wrong_class_code':
-      return "That class code isn't right. Ask in the group chat."
-    case 'bad_pin':
-      return 'Your PIN needs to be 4 to 8 digits.'
-    case 'wrong_pin':
-      return "That PIN doesn't match this card."
-    case 'class_full':
-      return `All ${config.classSize} spots are taken. If that's wrong, tell whoever runs the site.`
+    case 'wrong_password':
+      return "That password isn't right. Check the one you were given."
     case 'unreadable_image':
       return "Couldn't read that photo. Try a JPG or PNG."
     case 'network':
@@ -155,17 +136,18 @@ export function errorMessage(err: unknown): string {
   }
 }
 
-const CODE_KEY = 'yb-class-code'
-export function rememberedClassCode() {
+const PASSWORD_KEY = 'yb-password'
+/** Remembers the visitor's own password on this device, so they only type it once. */
+export function rememberedPassword() {
   try {
-    return localStorage.getItem(CODE_KEY) ?? ''
+    return localStorage.getItem(PASSWORD_KEY) ?? ''
   } catch {
     return ''
   }
 }
-export function rememberClassCode(code: string) {
+export function rememberPassword(password: string) {
   try {
-    localStorage.setItem(CODE_KEY, code)
+    localStorage.setItem(PASSWORD_KEY, password)
   } catch {
     /* private mode */
   }
